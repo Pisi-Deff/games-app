@@ -1,7 +1,7 @@
 package ee.eerikmagi.experiments.games_app.api.persistence.repos;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,5 +27,5 @@ public interface IGameTaggingRepository extends JpaRepository<GameTagging, Long>
 			") FROM GameTagging gt WHERE gt.game.id = :gameId " +
 			"GROUP BY gt.game.id, gt.tag.id, gt.tag.name "
 	)
-	Page<GameTag> getGameTagsByGameid(@Param("gameId") long gameId, Pageable pageable);
+	Slice<GameTag> getGameTagsByGameid(@Param("gameId") long gameId, Pageable pageable);
 }

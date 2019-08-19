@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
@@ -53,16 +50,16 @@ public class GameController {
 		Game game = gameSvc.get(id);
 		GameDTO gameDTO = modelMapper.map(game, GameDTO.class);
 
-		Page<GameTag> gameTags = gameTagSvc.getByGameId(game.getId(),
+		Slice<GameTag> gameTags = gameTagSvc.getByGameId(game.getId(),
 			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("counter"), Sort.Order.asc("name"))));
-		gameDTO.setTags(modelMapper.map(gameTags, new TypeToken<Page<GameTagDTO>>() {}.getType()));
+		gameDTO.setTags(modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType()));
 
 		return gameDTO;
 	}
 
 	@GetMapping("/{gameId}/tags")
 	@ResponseBody
-	public Page<GameTagDTO> getTags(
+	public Slice<GameTagDTO> getTags(
 		@PathVariable long gameId,
 		@PageableDefault(size = 8)
 		@SortDefault.SortDefaults({
@@ -71,8 +68,8 @@ public class GameController {
 		})
 			Pageable pageable
 	) {
-		Page<GameTag> gameTags = gameTagSvc.getByGameId(gameId, pageable);
-		return modelMapper.map(gameTags, new TypeToken<Page<GameTagDTO>>() {}.getType());
+		Slice<GameTag> gameTags = gameTagSvc.getByGameId(gameId, pageable);
+		return modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType());
 	}
 
 	@PostMapping
