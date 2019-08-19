@@ -1,0 +1,5 @@
+FROM redis
+
+ENV REDIS_PASSWORD gameredis
+
+EXPOSE 6379/tcp
