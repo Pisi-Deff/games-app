@@ -1,0 +1,3 @@
+rootProject.name = 'games-app'
+
+include 'games-api', 'games-frontend', 'games-db', 'games-redis'

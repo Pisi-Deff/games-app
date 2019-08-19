@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'com.github.node-gradle.node' version '2.0.0'
+}
+
+node {
+    download = false
+}
+
+npm_run_build {
+    inputs.files fileTree('public')
+    inputs.files fileTree('src')
+    inputs.file 'package.json'
+    inputs.file 'package-lock.json'
+
+    outputs.dir 'build'
+}
+
+jar.dependsOn 'npm_run_build'
+
+jar {
+  from 'dist/todo-ui' into 'static'
+}
