@@ -1,0 +1,36 @@
+<form role="form" (submit)="login()">
+	<mat-card class="example-card">
+		<mat-card-header>
+			<mat-card-title>Login</mat-card-title>
+		</mat-card-header>
+
+		<mat-card-content>
+			<div class="alert alert-danger" [hidden]="!error">
+				There was a problem logging in. Please try again.
+			</div>
+
+			<p>
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input matInput required [(ngModel)]="credentials.username" name="user" />
+				</mat-form-field>
+			</p>
+			<p>
+				<mat-form-field appearance="outline">
+					<mat-label>Password</mat-label>
+					<input matInput [type]="hidePass ? 'password' : 'text'" required [(ngModel)]="credentials.password" name="pass"  />
+					<button mat-icon-button matSuffix (click)="hidePass = !hidePass" aria-label="Hide password" [attr.aria-pressed]="hidePass">
+						<mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+					</button>
+				</mat-form-field>
+			</p>
+		</mat-card-content>
+
+		<mat-card-actions>
+			<button mat-flat-button color="primary" type="submit" [disabled]="loggingIn">
+				Log In
+			</button>
+			<mat-spinner [style.display]="loggingIn ? 'block' : 'none'" color="primary"></mat-spinner>
+		</mat-card-actions>
+	</mat-card>
+</form>
