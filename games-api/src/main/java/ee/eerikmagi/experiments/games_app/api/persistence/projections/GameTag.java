@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GameTag {
-	private long gameid;
+	private long gameId;
 
-	private long tagid;
+	private long tagId;
 	private String tagName;
 
 	private long counter;
