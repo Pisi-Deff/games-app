@@ -1,27 +1,36 @@
 <form role="form" (submit)="login()">
-	<mat-card class="example-card">
+	<mat-card>
 		<mat-card-header>
 			<mat-card-title>Login</mat-card-title>
 		</mat-card-header>
 
 		<mat-card-content>
-			<div class="alert alert-danger" [hidden]="!error">
+			<mat-card *ngIf="!error"><!-- TODO: fix appearance: red outline, icon alignment -->
+				<mat-icon color="accent">error_outline</mat-icon>
 				There was a problem logging in. Please try again.
-			</div>
+			</mat-card>
 
 			<p>
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
-					<input matInput required [(ngModel)]="credentials.username" name="user" />
+					<input matInput [(ngModel)]="credentials.username" name="user" />
 				</mat-form-field>
 			</p>
 			<p>
 				<mat-form-field appearance="outline">
 					<mat-label>Password</mat-label>
-					<input matInput [type]="hidePass ? 'password' : 'text'" required [(ngModel)]="credentials.password" name="pass"  />
-					<button mat-icon-button matSuffix (click)="hidePass = !hidePass" aria-label="Hide password" [attr.aria-pressed]="hidePass">
-						<mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
-					</button>
+					<input matInput [type]="hidePass ? 'password' : 'text'" [(ngModel)]="credentials.password" name="pass" />
+					<!-- below currently looks crap in non-chrome browsers
+						https://github.com/angular/components/issues/13094
+					-->
+<!--					<button type="button" mat-icon-button matSuffix (click)="hidePass = !hidePass" aria-label="Hide password" [attr.aria-pressed]="hidePass">-->
+<!--						<mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>-->
+<!--					</button>-->
+					<!-- non-crap-looking but buttonless, thus needing style overrides to mimic appearance -->
+					<mat-icon matSuffix (click)="hidePass = !hidePass"
+							aria-label="Hide password" [attr.aria-pressed]="hidePass" class="icon--button">
+						{{hidePass ? 'visibility_off' : 'visibility'}}
+					</mat-icon>
 				</mat-form-field>
 			</p>
 		</mat-card-content>
@@ -30,7 +39,7 @@
 			<button mat-flat-button color="primary" type="submit" [disabled]="loggingIn">
 				Log In
 			</button>
-			<mat-spinner [style.display]="loggingIn ? 'block' : 'none'" color="primary"></mat-spinner>
+			<mat-spinner *ngIf="loggingIn" color="primary"></mat-spinner>
 		</mat-card-actions>
 	</mat-card>
 </form>

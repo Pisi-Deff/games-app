@@ -1,0 +1,23 @@
+:host {
+	display: flex;
+	justify-content: center;
+	margin: 100px 0;
+}
+
+.icon--button {
+	cursor: pointer;
+}
+
+mat-card {
+	//background-color: bluie;
+}
+
+.mat-card-header {
+	display: flex;
+	justify-content: center;
+}
+
+.mat-card-actions {
+	display: flex;
+	justify-content: flex-end;
+}
