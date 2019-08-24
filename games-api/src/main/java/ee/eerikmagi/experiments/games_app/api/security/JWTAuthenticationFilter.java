@@ -64,6 +64,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			.claim("rol", roles)
 			.compact();
 
+		// TODO: possibly add dude's uuid to token? is that a good idea?
+
 		response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
 
 		DudeDTO dude = modelMapper.map(user.getDude(), DudeDTO.class);
