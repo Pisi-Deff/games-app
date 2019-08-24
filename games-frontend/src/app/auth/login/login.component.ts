@@ -9,7 +9,7 @@ export class LoginComponent {
 	hidePass = true;
 	credentials = {username: '', password: ''};
 	loggingIn = false;
-	error = false;
+	error: string = null;
 
 	constructor(private router: Router) {}
 

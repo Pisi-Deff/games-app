@@ -5,9 +5,12 @@
 		</mat-card-header>
 
 		<mat-card-content>
-			<mat-card *ngIf="!error"><!-- TODO: fix appearance: red outline, icon alignment -->
+			<mat-card *ngIf="error"><!-- TODO: fix appearance: red outline, icon alignment -->
 				<mat-icon color="accent">error_outline</mat-icon>
-				There was a problem logging in. Please try again.
+				<span [ngSwitch]="error">
+					<span *ngSwitchCase="'invalid-credentials'">Invalid credentials.</span>
+					<span *ngSwitchDefault>There was a problem logging in. Please try again.</span>
+				</span>
 			</mat-card>
 
 			<p>
