@@ -53,6 +53,7 @@ public class GamesAPIApplication {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
+			// @formatter:off
 			http
 				.cors()
 
@@ -71,6 +72,7 @@ public class GamesAPIApplication {
 
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			// @formatter:on
 		}
 	}
 
