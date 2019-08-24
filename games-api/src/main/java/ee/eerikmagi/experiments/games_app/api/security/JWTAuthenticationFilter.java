@@ -1,8 +1,18 @@
 package ee.eerikmagi.experiments.games_app.api.security;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,18 +20,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import ee.eerikmagi.experiments.games_app.api.dto.DudeDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authenticationManager;
+	private final ModelMapper modelMapper;
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, ModelMapper modelMapper) {
 		this.authenticationManager = authenticationManager;
+		this.modelMapper = modelMapper;
 
 		setFilterProcessesUrl(SecurityConstants.AUTH_LOGIN_URL);
 		setUsernameParameter(SecurityConstants.PARAM_USERNAME);
@@ -58,5 +65,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			.compact();
 
 		response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
+
+		DudeDTO dude = modelMapper.map(user.getDude(), DudeDTO.class);
+		try {
+			// TODO: figure out what class Spring is using to do content type negotiation & support writing output as whatever client requests, e.g. as xml
+			response.getWriter().write(new ObjectMapper().writeValueAsString(dude));
+		} catch (IOException e) {
+			// TODO: log error & just don't send dude data to client
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package ee.eerikmagi.experiments.games_app.api;
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +47,10 @@ public class GamesAPIApplication {
 	}
 
 	@Configuration
+	@AllArgsConstructor(onConstructor_ = @Autowired)
 	protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+		private ModelMapper modelMapper;
+
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http
@@ -61,7 +66,7 @@ public class GamesAPIApplication {
 
 				.and()
 
-				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
+				.addFilter(new JWTAuthenticationFilter(authenticationManager(), modelMapper))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()))
 
 				.sessionManagement()
