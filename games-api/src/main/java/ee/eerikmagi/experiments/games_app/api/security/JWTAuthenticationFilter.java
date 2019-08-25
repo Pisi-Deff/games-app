@@ -67,7 +67,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// TODO: possibly add dude's uuid to token? is that a good idea?
 
 		response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
+
 		response.addHeader("Access-Control-Expose-Headers", "Authorization"); // TODO: there's probably a "spring" way to do this properly
+		response.addHeader("Content-Type", "application/json;charset=UTF-8");
 
 		DudeDTO dude = modelMapper.map(user.getDude(), DudeDTO.class);
 		try {
