@@ -6,9 +6,11 @@ import {GamesService} from './games.service';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {GameTagComponent} from './common/game-tag/game-tag.component';
+import {NewGameComponent} from './new-game/new-game.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
+	{path: 'new', component: NewGameComponent},
 	{path: ':id', component: GameDetailsComponent},
 ];
 
@@ -17,6 +19,7 @@ const routes: Routes = [
 		GamesListComponent,
 		GameDetailsComponent,
 		GameTagComponent,
+		NewGameComponent,
 	],
 	imports: [
 		SharedModule,

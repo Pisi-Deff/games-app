@@ -1,4 +1,8 @@
 <mat-toolbar>
+	<a mat-button routerLink="new">
+		<mat-icon>add_circle_outline</mat-icon>
+		<span> New game</span>
+	</a>
 	<span class="spacer"></span>
 	<button type="button" mat-icon-button (click)="refreshData()"
 		[disabled]="loading"

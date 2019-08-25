@@ -6,6 +6,7 @@ import {GameDetailed} from './game-details/game-detailed';
 import {SortDirection} from '@angular/material';
 import {Page} from '../shared/page';
 import {environment} from '../../environments/environment';
+import {GameCreation} from './new-game/game-creation';
 
 @Injectable({
 	providedIn: 'root'
@@ -33,7 +34,11 @@ export class GamesService {
 		return this.http.get<Page<GameListItem>>(`${environment.apiURI}/games`, {params});
 	}
 
-	getDetailed(id: number): GameDetailed {
-		return null;
+	getDetailed(id: number): Observable<GameDetailed> {
+		return this.http.get<GameDetailed>(`${environment.apiURI}/games/${id}`);
+	}
+
+	create(game: GameCreation): Observable<GameDetailed> {
+		return this.http.post<GameDetailed>(`${environment.apiURI}/games`, game);
 	}
 }
