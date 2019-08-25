@@ -39,10 +39,10 @@
 		</mat-card-content>
 
 		<mat-card-actions>
+			<mat-spinner *ngIf="loggingIn" color="primary" diameter="36"></mat-spinner>
 			<button mat-flat-button color="primary" type="submit" [disabled]="loggingIn">
 				Log In
 			</button>
-			<mat-spinner *ngIf="loggingIn" color="primary"></mat-spinner>
 		</mat-card-actions>
 	</mat-card>
 </form>
