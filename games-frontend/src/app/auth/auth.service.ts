@@ -21,8 +21,8 @@ export class AuthService {
 		error?: string,
 	}> {
 		const formData = new FormData();
-		formData.append('email', email);
-		formData.append('password', password);
+		formData.append('email', email.trim());
+		formData.append('password', password.trim());
 
 		return this.http.post<{
 			uuid: string,
@@ -36,7 +36,6 @@ export class AuthService {
 		).pipe(
 			map(resp => {
 				const auth = resp.headers.get('Authorization');
-				console.log(auth);
 				if (auth == null || !auth.startsWith('Bearer ')) {
 					return {
 						success: false,
