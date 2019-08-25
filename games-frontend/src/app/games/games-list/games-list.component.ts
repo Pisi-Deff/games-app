@@ -32,7 +32,7 @@ export class GamesListComponent implements AfterViewInit {
 			).subscribe(data => this.data = data);
 	}
 
-	loadData(): Observable<GameListItem[]> {
+	private loadData(): Observable<GameListItem[]> {
 		this.loading = true;
 
 		return this.gamesSvc.list(
@@ -51,5 +51,9 @@ export class GamesListComponent implements AfterViewInit {
 				return of([]);
 			}),
 		);
+	}
+
+	refreshData() {
+		this.loadData().subscribe(data => this.data = data);
 	}
 }
