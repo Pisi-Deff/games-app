@@ -1,4 +1,4 @@
-<form role="form" (submit)="login()">
+<form role="form" (ngSubmit)="login()" [formGroup]="form">
 	<mat-card>
 		<mat-card-header>
 			<mat-card-title>Login</mat-card-title>
@@ -16,13 +16,13 @@
 			<p>
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
-					<input matInput [(ngModel)]="credentials.email" name="user" />
+					<input matInput formControlName="email" name="email" />
 				</mat-form-field>
 			</p>
 			<p>
 				<mat-form-field appearance="outline">
 					<mat-label>Password</mat-label>
-					<input matInput [type]="hidePass ? 'password' : 'text'" [(ngModel)]="credentials.password" name="pass" />
+					<input matInput [type]="hidePass ? 'password' : 'text'" formControlName="pass" name="pass" />
 					<!-- below currently looks crap in non-chrome browsers
 						https://github.com/angular/components/issues/13094
 					-->

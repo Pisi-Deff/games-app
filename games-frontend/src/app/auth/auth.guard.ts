@@ -19,21 +19,24 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 	constructor(private router: Router, private authSvc: AuthService) {}
 
 	canActivate(
-			next: ActivatedRouteSnapshot,
-			state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+		next: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		const url: string = state.url;
 		return this.checkLogin(url);
 	}
 
 	canActivateChild(
-			next: ActivatedRouteSnapshot,
-			state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+		next: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		return this.canActivate(next, state);
 	}
 
 	canLoad(
-			route: Route,
-			segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+		route: Route,
+		segments: UrlSegment[]
+	): Observable<boolean> | Promise<boolean> | boolean {
 		const url = `/${route.path}`;
 		return this.checkLogin(url);
 	}
