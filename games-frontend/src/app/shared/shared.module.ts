@@ -3,11 +3,13 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
 	MatAutocompleteModule,
-	MatButtonModule, MatCardModule,
+	MatButtonModule,
+	MatCardModule,
 	MatDatepickerModule,
 	MatFormFieldModule,
 	MatIconModule,
 	MatInputModule,
+	MatMenuModule,
 	MatProgressSpinnerModule,
 	MatTableModule,
 	MatToolbarModule
@@ -33,6 +35,7 @@ import {
 		MatToolbarModule,
 		MatCardModule,
 		MatProgressSpinnerModule,
+		MatMenuModule,
 	],
 })
 export class SharedModule {

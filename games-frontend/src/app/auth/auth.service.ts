@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {catchError, map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 interface DudeData {
 	token: string;
@@ -18,7 +19,7 @@ export class AuthService {
 
 	private dudeData: BehaviorSubject<DudeData> = new BehaviorSubject(this.dudeDataLS);
 
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpClient, private router: Router) {
 		this.dudeData.asObservable().subscribe(data => this.dudeDataLS = data);
 	}
 
@@ -74,11 +75,16 @@ export class AuthService {
 
 	logout() {
 		this.dudeData.next(null);
+		this.router.navigate(['/login']); // TODO: figure out why navigating to '/' doesn't work
 	}
 
 	get token(): string {
 		const data = this.dudeData.value;
 		return data && data.token || null;
+	}
+
+	dudeDataSub(cb: (value: DudeData) => void): Subscription {
+		return this.dudeData.subscribe(cb);
 	}
 
 	private get dudeDataLS() {

@@ -1,4 +1,15 @@
 <mat-toolbar color="primary" role="heading">
 	<span>Games App</span>
+	<span class="spacer"></span>
+	<button mat-button type="button" [matMenuTriggerFor]="dudeMenu">
+		<mat-icon>person</mat-icon>
+		<span> {{dudeName}}</span>
+	</button>
+	<mat-menu #dudeMenu="matMenu" xPosition="before">
+		<button mat-menu-item type="button" (click)="logout()">
+			<mat-icon color="primary">exit_to_app</mat-icon>
+			<span>Log out</span>
+		</button>
+	</mat-menu>
 </mat-toolbar>
 <router-outlet></router-outlet>
