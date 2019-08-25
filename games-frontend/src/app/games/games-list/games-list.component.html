@@ -16,6 +16,7 @@
 	<div class="table-cover" *ngIf="loading || error">
 		<mat-spinner *ngIf="loading"></mat-spinner>
 		<div class="error-cover" *ngIf="error">
+			<!-- TODO: text currently appears over table header, which looks weird -->
 			There was an error retrieving the data. Please retry.
 		</div>
 	</div>
