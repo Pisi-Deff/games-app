@@ -4,17 +4,23 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {catchError, map} from 'rxjs/operators';
 
+interface DudeData {
+	token: string;
+	uuid: string;
+	name: string;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
-	private dudeData: BehaviorSubject<{
-		token: string,
-		uuid: string,
-		name: string,
-	}> = new BehaviorSubject(null);
+	static readonly LS_KEY_DUDE_DATA = 'dudeData';
 
-	constructor(private http: HttpClient) {}
+	private dudeData: BehaviorSubject<DudeData> = new BehaviorSubject(this.dudeDataLS);
+
+	constructor(private http: HttpClient) {
+		this.dudeData.asObservable().subscribe(data => this.dudeDataLS = data);
+	}
 
 	login(email: string, password: string): Observable<{
 		success: boolean,
@@ -73,5 +79,18 @@ export class AuthService {
 	get token(): string {
 		const data = this.dudeData.value;
 		return data && data.token || null;
+	}
+
+	private get dudeDataLS() {
+		const data = localStorage.getItem(AuthService.LS_KEY_DUDE_DATA);
+		return data && JSON.parse(data) || null;
+	}
+
+	private set dudeDataLS(dudeData: DudeData) {
+		if (dudeData == null) {
+			localStorage.removeItem(AuthService.LS_KEY_DUDE_DATA);
+		} else {
+			localStorage.setItem(AuthService.LS_KEY_DUDE_DATA, JSON.stringify(dudeData));
+		}
 	}
 }

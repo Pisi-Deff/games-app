@@ -8,7 +8,7 @@ import {JwtInterceptor} from './jwt.interceptor';
 import {ErrorInterceptor} from './error.interceptor';
 
 const routes: Route[] = [
-	{path: 'login', component: LoginComponent},
+	{path: 'login', component: LoginComponent}, // TODO: block login if user is authenticated
 ];
 
 @NgModule({
