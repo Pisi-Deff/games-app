@@ -3,14 +3,18 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
 	MatAutocompleteModule,
+	MatBadgeModule,
 	MatButtonModule,
 	MatCardModule,
+	MatChipsModule,
 	MatDatepickerModule,
 	MatFormFieldModule,
 	MatIconModule,
 	MatInputModule,
 	MatMenuModule,
+	MatPaginatorModule,
 	MatProgressSpinnerModule,
+	MatSortModule,
 	MatTableModule,
 	MatToolbarModule
 } from '@angular/material';
@@ -25,17 +29,21 @@ import {
 		FormsModule,
 		ReactiveFormsModule,
 
-		MatFormFieldModule,
 		MatAutocompleteModule,
+		MatBadgeModule,
 		MatButtonModule,
-		MatDatepickerModule,
-		MatTableModule,
-		MatInputModule,
-		MatIconModule,
-		MatToolbarModule,
 		MatCardModule,
-		MatProgressSpinnerModule,
+		MatChipsModule,
+		MatDatepickerModule,
+		MatFormFieldModule,
+		MatIconModule,
+		MatInputModule,
 		MatMenuModule,
+		MatPaginatorModule,
+		MatProgressSpinnerModule,
+		MatSortModule,
+		MatTableModule,
+		MatToolbarModule,
 	],
 })
 export class SharedModule {
