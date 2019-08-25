@@ -33,7 +33,10 @@
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	<tr mat-row
+		*matRowDef="let row; let even = even; columns: displayedColumns;"
+		[ngClass]="{'table-row--even': even}"
+	></tr>
 </table>
 
 <mat-paginator pageSize="5" [pageSizeOptions]="[5, 10, 20]" [length]="resultsLength" showFirstLastButtons></mat-paginator>
