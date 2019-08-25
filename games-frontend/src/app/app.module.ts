@@ -6,15 +6,19 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './auth/auth.module';
 import {SharedModule} from './shared/shared.module';
-import { MainUiComponent } from './main-ui/main-ui.component';
+import {MainUiComponent} from './main-ui/main-ui.component';
+import {PageNotFoundComponent} from './errors/page-not-found/page-not-found.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		MainUiComponent
+		MainUiComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		BrowserAnimationsModule, // TOOD: can this be moved to shared?
 		SharedModule,
 		AuthModule,
@@ -23,4 +27,5 @@ import { MainUiComponent } from './main-ui/main-ui.component';
 	providers: [],
 	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

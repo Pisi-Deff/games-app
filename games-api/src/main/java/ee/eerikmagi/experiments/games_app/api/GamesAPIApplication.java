@@ -55,22 +55,20 @@ public class GamesAPIApplication {
 		protected void configure(HttpSecurity http) throws Exception {
 			// @formatter:off
 			http
+				.addFilter(new JWTAuthenticationFilter(authenticationManager(), modelMapper))
+				.addFilter(new JWTAuthorizationFilter(authenticationManager()))
+
 				.cors()
 
 				.and()
-
-				.csrf()
+					.csrf()
 					.disable()
 
 				.authorizeRequests()
 					.anyRequest().authenticated()
 
 				.and()
-
-				.addFilter(new JWTAuthenticationFilter(authenticationManager(), modelMapper))
-				.addFilter(new JWTAuthorizationFilter(authenticationManager()))
-
-				.sessionManagement()
+					.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 			// @formatter:on
 		}

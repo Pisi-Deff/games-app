@@ -10,12 +10,13 @@ import {
 	UrlTree, Router
 } from '@angular/router';
 import {Observable} from 'rxjs';
+import {AuthService} from './auth.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-	constructor(private router: Router) {}
+	constructor(private router: Router, private authSvc: AuthService) {}
 
 	canActivate(
 			next: ActivatedRouteSnapshot,
@@ -38,9 +39,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 	}
 
 	checkLogin(url: string): boolean {
-		// if (this.authService.isLoggedIn) { return true; }
-		//
-		// // Store the attempted URL for redirecting
+		if (this.authSvc.token) {
+			return true;
+		}
+
+		// TODO: Store the attempted URL for redirecting
 		// this.authService.redirectUrl = url;
 		this.router.navigate(['/login']);
 		return false;
