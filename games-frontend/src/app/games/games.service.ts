@@ -34,7 +34,7 @@ export class GamesService {
 		return this.http.get<Page<GameListItem>>(`${environment.apiURI}/games`, {params});
 	}
 
-	getDetailed(id: number): Observable<GameDetailed> {
+	get(id: number): Observable<GameDetailed> {
 		return this.http.get<GameDetailed>(`${environment.apiURI}/games/${id}`);
 	}
 
