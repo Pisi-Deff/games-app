@@ -16,7 +16,8 @@ import {
 	MatProgressSpinnerModule,
 	MatSortModule,
 	MatTableModule,
-	MatToolbarModule
+	MatToolbarModule,
+	MatTooltipModule,
 } from '@angular/material';
 
 @NgModule({
@@ -44,6 +45,7 @@ import {
 		MatSortModule,
 		MatTableModule,
 		MatToolbarModule,
+		MatTooltipModule,
 	],
 })
 export class SharedModule {

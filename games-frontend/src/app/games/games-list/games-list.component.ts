@@ -4,13 +4,14 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {GameListItem} from './game-list-item';
 import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
 	templateUrl: './games-list.component.html',
 	styleUrls: ['./games-list.component.scss']
 })
 export class GamesListComponent implements AfterViewInit {
-	displayedColumns: string[] = ['name', 'releaseDate', 'topTags'];
+	displayedColumns: string[] = ['name', 'releaseDate', 'topTags', 'actions'];
 	data: GameListItem[] = [];
 
 	resultsLength = 0;
@@ -20,7 +21,7 @@ export class GamesListComponent implements AfterViewInit {
 	@ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 	@ViewChild(MatSort, {static: false}) sort: MatSort;
 
-	constructor(private gamesSvc: GamesService) {}
+	constructor(private gamesSvc: GamesService, private router: Router, private route: ActivatedRoute) {}
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -55,5 +56,9 @@ export class GamesListComponent implements AfterViewInit {
 
 	refreshData() {
 		this.loadData().subscribe(data => this.data = data);
+	}
+
+	openDetails(id: number) {
+		this.router.navigate([id], {relativeTo: this.route});
 	}
 }
