@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class GameTaggingCreationDTO {
 	private String tagName;
-	private long gameId;
 }

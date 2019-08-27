@@ -30,6 +30,7 @@ public class TagController {
 		Pageable pageable
 	) {
 		// there's currently no way to specify `ignoreCase()` over annotations nor via request
+		// can't think of use case where frontend wouldn't want sort by name, so let's just always override
 		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
 			Sort.by(Sort.Order.asc("name").ignoreCase()));
 

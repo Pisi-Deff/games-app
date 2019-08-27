@@ -1,12 +1,12 @@
 package ee.eerikmagi.experiments.games_app.api.controllers;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,6 @@ import ee.eerikmagi.experiments.games_app.api.persistence.entities.Game;
 import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
 import ee.eerikmagi.experiments.games_app.api.services.IGameService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("games")
@@ -55,21 +53,6 @@ public class GameController {
 		gameDTO.setTags(modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType()));
 
 		return gameDTO;
-	}
-
-	@GetMapping("/{gameId}/tags")
-	@ResponseBody
-	public Slice<GameTagDTO> getTags(
-		@PathVariable long gameId,
-		@PageableDefault(size = 8)
-		@SortDefault.SortDefaults({
-			@SortDefault(sort = "counter", direction = Sort.Direction.DESC),
-			@SortDefault(sort = "name", direction = Sort.Direction.ASC)
-		})
-			Pageable pageable
-	) {
-		Slice<GameTag> gameTags = gameTagSvc.getByGameId(gameId, pageable);
-		return modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType());
 	}
 
 	@PostMapping

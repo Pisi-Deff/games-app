@@ -6,18 +6,20 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingCreationDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 
 @RestController
-@RequestMapping("currentDude/taggings")
+@RequestMapping("games/{gameId}/taggings")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor(onConstructor_ = @Autowired)
-public class CurrentDudeTaggingsController {
+public class GameTaggingsController {
 	private ModelMapper modelMapper;
 	private IGameTaggingService gameTaggingSvc;
 
@@ -27,17 +29,18 @@ public class CurrentDudeTaggingsController {
 
 	@GetMapping
 	@ResponseBody
-	public List<GameTaggingDTO> listTaggings(@RequestParam(required = false) Long gameId, Authentication authentication) {
-		List<GameTagging> gameTaggings;
+	public List<GameTaggingDTO> list(@PathVariable long gameId, Authentication authentication) {
 		String dudemail = (String) authentication.getPrincipal();
-
-		if (gameId != null) {
-			gameTaggings = gameTaggingSvc.list(dudemail, gameId);
-		} else {
-			gameTaggings = gameTaggingSvc.list(dudemail);
-		}
-
+		List<GameTagging> gameTaggings = gameTaggingSvc.list(dudemail, gameId);
 		return modelMapper.map(gameTaggings, new TypeToken<List<GameTaggingDTO>>() {}.getType());
+	}
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public void add(@PathVariable long gameId, @RequestBody GameTaggingCreationDTO tagging, Authentication authentication) {
+		String dudemail = (String) authentication.getPrincipal();
+		gameTaggingSvc.add(dudemail, gameId, tagging.getTagName());
 	}
 
 	@DeleteMapping("/{taggingId}")
