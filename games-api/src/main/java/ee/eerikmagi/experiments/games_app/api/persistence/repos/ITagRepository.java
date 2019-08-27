@@ -1,10 +1,11 @@
 package ee.eerikmagi.experiments.games_app.api.persistence.repos;
 
-import ee.eerikmagi.experiments.games_app.api.persistence.entities.Tag;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Tag;
 
 @Repository
 public interface ITagRepository extends JpaRepository<Tag, Long> {
@@ -12,5 +13,5 @@ public interface ITagRepository extends JpaRepository<Tag, Long> {
 
 	// TODO: figure out way to use postgresql similarity operator instead of "contains"
 	// possibly something similar to: http://java-talks.blogspot.com/2014/04/use-postgresql-full-text-search-with-hql.html
-	List<Tag> findFirst20ByNameContainingIgnoreCase(String name);
+	Slice<Tag> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

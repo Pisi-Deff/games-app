@@ -1,13 +1,18 @@
 package ee.eerikmagi.experiments.games_app.api.controllers;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Tag;
 import ee.eerikmagi.experiments.games_app.api.services.ITagService;
 
 @RestController
@@ -20,7 +25,21 @@ public class TagController {
 
 	@GetMapping
 	@ResponseBody
-	public Slice<TagDTO> get(@RequestParam(required = false) String name, Pageable pageable) {
-		return null;
+	public Slice<TagDTO> get(
+		@RequestParam(required = false) String name,
+		Pageable pageable
+	) {
+		// there's currently no way to specify `ignoreCase()` over annotations nor via request
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+			Sort.by(Sort.Order.asc("name").ignoreCase()));
+
+		Slice<Tag> tags;
+		if (StringUtils.isBlank(name)) {
+			tags = tagSvc.list(pageable);
+		} else {
+			tags = tagSvc.list(name, pageable);
+		}
+
+		return modelMapper.map(tags, new TypeToken<Slice<TagDTO>>() {}.getType());
 	}
 }
