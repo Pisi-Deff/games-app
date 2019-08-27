@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingCreationDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingDTO;
+import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 
@@ -38,9 +38,9 @@ public class GameTaggingsController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void add(@PathVariable long gameId, @RequestBody GameTaggingCreationDTO tagging, Authentication authentication) {
+	public void add(@PathVariable long gameId, @RequestBody TagDTO tag, Authentication authentication) {
 		String dudemail = (String) authentication.getPrincipal();
-		gameTaggingSvc.add(dudemail, gameId, tagging.getTagName());
+		gameTaggingSvc.add(dudemail, gameId, tag.getName());
 	}
 
 	@DeleteMapping("/{taggingId}")

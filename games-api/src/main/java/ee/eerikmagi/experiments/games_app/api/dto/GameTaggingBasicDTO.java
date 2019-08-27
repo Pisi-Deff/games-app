@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GameTaggingCreationDTO {
+public class GameTaggingBasicDTO {
+	private long id;
 	private String tagName;
 }

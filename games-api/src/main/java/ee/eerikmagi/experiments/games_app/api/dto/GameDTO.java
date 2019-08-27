@@ -1,10 +1,11 @@
 package ee.eerikmagi.experiments.games_app.api.dto;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Slice;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,4 +15,5 @@ public class GameDTO {
 	private String description;
 	private LocalDate releaseDate;
 	private Slice<GameTagDTO> tags;
+	private List<GameTaggingBasicDTO> dudeTaggings;
 }

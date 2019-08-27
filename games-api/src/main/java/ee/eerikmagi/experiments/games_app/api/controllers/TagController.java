@@ -3,7 +3,6 @@ package ee.eerikmagi.experiments.games_app.api.controllers;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +40,6 @@ public class TagController {
 			tags = tagSvc.list(name, pageable);
 		}
 
-		return modelMapper.map(tags, new TypeToken<Slice<TagDTO>>() {}.getType());
+		return tags.map(t -> modelMapper.map(t, TagDTO.class));
 	}
 }

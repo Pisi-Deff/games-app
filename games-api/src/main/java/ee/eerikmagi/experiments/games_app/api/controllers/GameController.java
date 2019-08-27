@@ -8,16 +8,16 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import ee.eerikmagi.experiments.games_app.api.dto.GameCreateUpdateDTO;
-import ee.eerikmagi.experiments.games_app.api.dto.GameDTO;
-import ee.eerikmagi.experiments.games_app.api.dto.GameListItemDTO;
-import ee.eerikmagi.experiments.games_app.api.dto.GameTagDTO;
+import ee.eerikmagi.experiments.games_app.api.dto.*;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Game;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
 import ee.eerikmagi.experiments.games_app.api.services.IGameService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
+import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 
 @RestController
 @RequestMapping("games")
@@ -27,12 +27,13 @@ public class GameController {
 	private ModelMapper modelMapper;
 	private IGameService gameSvc;
 	private IGameTagService gameTagSvc;
+	private IGameTaggingService gameTaggingSvc;
 
 	@GetMapping
 	@ResponseBody
 	public Page<GameListItemDTO> list(Pageable pageable) {
 		Page<Game> page = gameSvc.getPage(pageable);
-		return page.map((game) -> {
+		return page.map(game -> {
 			GameListItemDTO item = modelMapper.map(game, GameListItemDTO.class);
 
 			List<GameTag> gameTags = gameTagSvc.getTop3ByGameId(game.getId());
@@ -44,13 +45,19 @@ public class GameController {
 
 	@GetMapping("/{id}")
 	@ResponseBody
-	public GameDTO get(@PathVariable long id) {
+	public GameDTO get(@PathVariable long id, Authentication authentication) {
+		String dudemail = (String) authentication.getPrincipal();
 		Game game = gameSvc.get(id);
 		GameDTO gameDTO = modelMapper.map(game, GameDTO.class);
 
 		Slice<GameTag> gameTags = gameTagSvc.getByGameId(game.getId(),
 			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("counter"), Sort.Order.asc("name"))));
-		gameDTO.setTags(modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType()));
+		gameDTO.setTags(gameTags.map(gt -> modelMapper.map(gt, GameTagDTO.class)));
+
+		// TODO: rethink whether this is "the" solution...
+		//  maybe forcing frontend to make 2 requests is more reasonable to keep this call cleaner?
+		List<GameTagging> dudeGameTags = gameTaggingSvc.list(dudemail, game.getId());
+		gameDTO.setDudeTaggings(modelMapper.map(dudeGameTags, new TypeToken<List<GameTaggingBasicDTO>>() {}.getType()));
 
 		return gameDTO;
 	}

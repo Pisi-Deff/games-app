@@ -2,7 +2,6 @@ package ee.eerikmagi.experiments.games_app.api.controllers;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -36,6 +35,6 @@ public class GameTagController {
 		Pageable pageable
 	) {
 		Slice<GameTag> gameTags = gameTagSvc.getByGameId(gameId, pageable);
-		return modelMapper.map(gameTags, new TypeToken<Slice<GameTagDTO>>() {}.getType());
+		return gameTags.map(gt -> modelMapper.map(gt, GameTagDTO.class));
 	}
 }

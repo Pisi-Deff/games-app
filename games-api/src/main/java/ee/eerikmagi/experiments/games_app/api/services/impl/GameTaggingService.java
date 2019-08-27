@@ -1,5 +1,7 @@
 package ee.eerikmagi.experiments.games_app.api.services.impl;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,6 @@ import ee.eerikmagi.experiments.games_app.api.persistence.repos.IGameRepository;
 import ee.eerikmagi.experiments.games_app.api.persistence.repos.IGameTaggingRepository;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 import ee.eerikmagi.experiments.games_app.api.services.ITagService;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor_ = @Autowired)
