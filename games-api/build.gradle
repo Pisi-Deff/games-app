@@ -49,5 +49,8 @@ dependencies {
 	runtime 'io.jsonwebtoken:jjwt-impl:0.10.7',
 		'io.jsonwebtoken:jjwt-jackson:0.10.7'
 
+//	compile 'io.springfox:springfox-swagger2:2.9.2' // TODO: consider implementing API generation
+//	compile 'io.springfox:springfox-swagger-ui:2.9.2'
+
 	implementation project(':games-frontend')
 }
