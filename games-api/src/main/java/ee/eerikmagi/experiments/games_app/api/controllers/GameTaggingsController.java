@@ -24,10 +24,6 @@ public class GameTaggingsController {
 	private ModelMapper modelMapper;
 	private IGameTaggingService gameTaggingSvc;
 
-	// TODO:
-	// 1) convert dudemail to ID (hibernate + redis)
-	// 2) replace Dude objects with a hibernate proxy using ID
-
 	@GetMapping
 	@ResponseBody
 	public List<GameTaggingDTO> list(@PathVariable long gameId, @CurrentDude Dude currentDude) {
