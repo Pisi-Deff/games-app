@@ -1,5 +1,7 @@
 package ee.eerikmagi.experiments.games_app.api;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthenticationFilter;
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthorizationFilter;
+import ee.eerikmagi.experiments.games_app.api.util.CurrentDudeProcessor;
 
 @SpringBootApplication
 public class GamesAPIApplication {
@@ -84,5 +89,16 @@ public class GamesAPIApplication {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(lettuceConnectionFactory());
 		return template;
+	}
+
+	@Configuration
+	@AllArgsConstructor(onConstructor_ = @Autowired)
+	protected static class WebConfig implements WebMvcConfigurer {
+		private CurrentDudeProcessor currentDudeProcessor;
+
+		@Override
+		public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+			resolvers.add(currentDudeProcessor);
+		}
 	}
 }

@@ -10,7 +10,6 @@ import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Game;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Tag;
-import ee.eerikmagi.experiments.games_app.api.persistence.repos.IDudeRepository;
 import ee.eerikmagi.experiments.games_app.api.persistence.repos.IGameRepository;
 import ee.eerikmagi.experiments.games_app.api.persistence.repos.IGameTaggingRepository;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
@@ -20,11 +19,7 @@ import ee.eerikmagi.experiments.games_app.api.services.ITagService;
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class GameTaggingService implements IGameTaggingService {
 	private IGameRepository gameRep;
-
 	private IGameTaggingRepository gameTaggingRep;
-
-	private IDudeRepository dudeRep;
-
 	private ITagService tagSvc;
 
 	@Override
@@ -33,35 +28,33 @@ public class GameTaggingService implements IGameTaggingService {
 	}
 
 	@Override
-	public GameTagging add(String dudemail, long gameId, String tagName) {
+	public GameTagging add(Dude dude, long gameId, String tagName) {
 		Tag t = tagSvc.getOrCreateTag(tagName);
 		Game g = gameRep.getOne(gameId);
-		Dude d = dudeRep.findByEmailIgnoreCase(dudemail);
 
 		GameTagging gt = new GameTagging();
 		gt.setTag(t);
 		gt.setGame(g);
-		gt.setDude(d);
+		gt.setDude(dude);
 
 		return gameTaggingRep.save(gt);
 	}
 
 	@Override
-	public void delete(String dudemail, long id) {
+	public void delete(Dude dude, long id) {
 		GameTagging gt = get(id);
-		Dude d = dudeRep.findByEmailIgnoreCase(dudemail);
-		if (gt.getDude().equals(d)) {
+		if (gt.getDude().equals(dude)) {
 			gameTaggingRep.delete(gt);
 		}
 	}
 
 	@Override
-	public List<GameTagging> list(String dudemail) {
-		return gameTaggingRep.getByDude(dudeRep.findByEmailIgnoreCase(dudemail));
+	public List<GameTagging> list(Dude dude) {
+		return gameTaggingRep.getByDude(dude);
 	}
 
 	@Override
-	public List<GameTagging> list(String dudemail, Long gameId) {
-		return gameTaggingRep.getByDudeAndGameId(dudeRep.findByEmailIgnoreCase(dudemail), gameId);
+	public List<GameTagging> list(Dude dude, Long gameId) {
+		return gameTaggingRep.getByDudeAndGameId(dude, gameId);
 	}
 }

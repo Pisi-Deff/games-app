@@ -7,13 +7,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
+import ee.eerikmagi.experiments.games_app.api.util.CurrentDude;
 
 @RestController
 @RequestMapping("games/{gameId}/taggings")
@@ -29,23 +30,20 @@ public class GameTaggingsController {
 
 	@GetMapping
 	@ResponseBody
-	public List<GameTaggingDTO> list(@PathVariable long gameId, Authentication authentication) {
-		String dudemail = (String) authentication.getPrincipal();
-		List<GameTagging> gameTaggings = gameTaggingSvc.list(dudemail, gameId);
+	public List<GameTaggingDTO> list(@PathVariable long gameId, @CurrentDude Dude currentDude) {
+		List<GameTagging> gameTaggings = gameTaggingSvc.list(currentDude, gameId);
 		return modelMapper.map(gameTaggings, new TypeToken<List<GameTaggingDTO>>() {}.getType());
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void add(@PathVariable long gameId, @RequestBody TagDTO tag, Authentication authentication) {
-		String dudemail = (String) authentication.getPrincipal();
-		gameTaggingSvc.add(dudemail, gameId, tag.getName());
+	public void add(@PathVariable long gameId, @RequestBody TagDTO tag, @CurrentDude Dude currentDude) {
+		gameTaggingSvc.add(currentDude, gameId, tag.getName());
 	}
 
 	@DeleteMapping("/{taggingId}")
-	public void delete(@PathVariable long taggingId, Authentication authentication) {
-		String dudemail = (String) authentication.getPrincipal();
-		gameTaggingSvc.delete(dudemail, taggingId);
+	public void delete(@PathVariable long taggingId, @CurrentDude Dude currentDude) {
+		gameTaggingSvc.delete(currentDude, taggingId);
 	}
 }

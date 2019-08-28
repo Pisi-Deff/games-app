@@ -1,14 +1,15 @@
 package ee.eerikmagi.experiments.games_app.api.services;
 
-import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
-
 import java.util.List;
+
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 
 public interface IGameTaggingService {
 	GameTagging get(long id);
-	GameTagging add(String dudemail, long gameid, String tagName);
-	void delete(String dudemail, long id);
+	GameTagging add(Dude dude, long gameId, String tagName);
+	void delete(Dude dude, long id);
 
-	List<GameTagging> list(String dudemail);
-	List<GameTagging> list(String dudemail, Long gameid);
+	List<GameTagging> list(Dude dude);
+	List<GameTagging> list(Dude dude, Long gameId);
 }

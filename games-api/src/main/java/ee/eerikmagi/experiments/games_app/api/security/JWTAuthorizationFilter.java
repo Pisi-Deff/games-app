@@ -1,5 +1,13 @@
 package ee.eerikmagi.experiments.games_app.api.security;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import org.apache.commons.lang3.StringUtils;
@@ -9,13 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
+import ee.eerikmagi.experiments.games_app.api.util.DudeReference;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -45,7 +47,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 					.setSigningKey(signingKey)
 					.parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, StringUtils.EMPTY));
 
-				String username = parsedToken
+				String email = parsedToken
 					.getBody()
 					.getSubject();
 
@@ -54,8 +56,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 					.map(authority -> new SimpleGrantedAuthority((String) authority))
 					.collect(Collectors.toList());
 
-				if (StringUtils.isNotBlank(username)) {
-					return new UsernamePasswordAuthenticationToken(username, null, authorities);
+				if (StringUtils.isNotBlank(email)) {
+					return new UsernamePasswordAuthenticationToken(
+						DudeReference.fromEmail(email), null, authorities);
 				}
 			} catch (ExpiredJwtException exception) {
 //				log.warn("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());

@@ -1,9 +1,5 @@
 package ee.eerikmagi.experiments.games_app.api.services.impl;
 
-import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
-import ee.eerikmagi.experiments.games_app.api.persistence.repos.IDudeRepository;
-import ee.eerikmagi.experiments.games_app.api.security.DudePrincipal;
-import ee.eerikmagi.experiments.games_app.api.services.IDudeService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,36 +7,59 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
+import ee.eerikmagi.experiments.games_app.api.persistence.repos.IDudeRepository;
+import ee.eerikmagi.experiments.games_app.api.security.DudePrincipal;
+import ee.eerikmagi.experiments.games_app.api.services.IDudeService;
+import ee.eerikmagi.experiments.games_app.api.util.DudeReference;
+
 @Service
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class DudeService implements IDudeService, UserDetailsService {
 	private IDudeRepository dudeRep;
 
 	@Override
-	public long getidByEmail(String email) {
-		// TODO: redis with fallback to query in repo
-		return 0;
+	public long getIdByEmail(String email) {
+		// TODO: redis
+		return dudeRep.getIdByEmailIgnoreCase(email);
 	}
 
 	@Override
-	public long getidByUUID(String uuid) {
-		// TODO: redis with fallback to query in repo
-		return 0;
+	public long getIdByUUID(String uuid) {
+		// TODO: redis
+		return dudeRep.getIdByUuid(uuid);
 	}
 
 	@Override
-	public Dude findByEmail(String email) {
-		return dudeRep.findByEmailIgnoreCase(email);
+	public Dude get(long id) {
+		return dudeRep.getById(id);
 	}
 
 	@Override
-	public Dude findByUUID(String uuid) {
-		return dudeRep.findByUuid(uuid);
+	public Dude getByEmail(String email) {
+		return dudeRep.getByEmailIgnoreCase(email);
+	}
+
+	@Override
+	public Dude getByUUID(String uuid) {
+		return dudeRep.getByUuid(uuid);
+	}
+
+	@Override
+	public Dude getByReference(DudeReference dudeRef) {
+		if (dudeRef.hasId()) {
+			return get(dudeRef.getId());
+		} else if (dudeRef.hasEmail()) {
+			return getByEmail(dudeRef.getEmail());
+		} else if (dudeRef.hasUUID()) {
+			return getByUUID(dudeRef.getUuid());
+		}
+		return null;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Dude dude = findByEmail(email);
+		Dude dude = getByEmail(email);
 		if (dude == null) {
 			throw new UsernameNotFoundException(email);
 		}

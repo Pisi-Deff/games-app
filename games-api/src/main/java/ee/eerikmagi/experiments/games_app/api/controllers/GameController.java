@@ -8,16 +8,17 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.dto.*;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Game;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
 import ee.eerikmagi.experiments.games_app.api.services.IGameService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
+import ee.eerikmagi.experiments.games_app.api.util.CurrentDude;
 
 @RestController
 @RequestMapping("games")
@@ -45,8 +46,7 @@ public class GameController {
 
 	@GetMapping("/{id}")
 	@ResponseBody
-	public GameDTO get(@PathVariable long id, Authentication authentication) {
-		String dudemail = (String) authentication.getPrincipal();
+	public GameDTO get(@PathVariable long id, @CurrentDude Dude currentDude) {
 		Game game = gameSvc.get(id);
 		GameDTO gameDTO = modelMapper.map(game, GameDTO.class);
 
@@ -56,7 +56,7 @@ public class GameController {
 
 		// TODO: rethink whether this is "the" solution...
 		//  maybe forcing frontend to make 2 requests is more reasonable to keep this call cleaner?
-		List<GameTagging> dudeGameTags = gameTaggingSvc.list(dudemail, game.getId());
+		List<GameTagging> dudeGameTags = gameTaggingSvc.list(currentDude, game.getId());
 		gameDTO.setDudeTaggings(modelMapper.map(dudeGameTags, new TypeToken<List<GameTaggingBasicDTO>>() {}.getType()));
 
 		return gameDTO;
