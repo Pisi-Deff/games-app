@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class DudeReference {
+	// TOOD: figure out better pkg for this class
 	private Long id;
 	private String email;
 	private String uuid;
