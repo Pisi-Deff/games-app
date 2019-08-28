@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingDTO;
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
+import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingBasicDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
-import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 
 @RestController
 @RequestMapping("games/{gameId}/taggings")
@@ -26,9 +26,9 @@ public class GameTaggingsController {
 
 	@GetMapping
 	@ResponseBody
-	public List<GameTaggingDTO> list(@PathVariable long gameId, @CurrentDude Dude currentDude) {
+	public List<GameTaggingBasicDTO> list(@PathVariable long gameId, @CurrentDude Dude currentDude) {
 		List<GameTagging> gameTaggings = gameTaggingSvc.list(currentDude, gameId);
-		return modelMapper.map(gameTaggings, new TypeToken<List<GameTaggingDTO>>() {}.getType());
+		return modelMapper.map(gameTaggings, new TypeToken<List<GameTaggingBasicDTO>>() {}.getType());
 	}
 
 	@PostMapping
