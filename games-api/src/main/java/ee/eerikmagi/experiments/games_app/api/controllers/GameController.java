@@ -10,15 +10,17 @@ import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 import ee.eerikmagi.experiments.games_app.api.dto.*;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Game;
+import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameReview;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
+import ee.eerikmagi.experiments.games_app.api.services.IGameReviewService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
-import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 
 @RestController
 @RequestMapping("games")
@@ -29,6 +31,7 @@ public class GameController {
 	private IGameService gameSvc;
 	private IGameTagService gameTagSvc;
 	private IGameTaggingService gameTaggingSvc;
+	private IGameReviewService gameReviewSvc;
 
 	@GetMapping
 	@ResponseBody
@@ -58,6 +61,10 @@ public class GameController {
 		//  maybe forcing frontend to make 2 requests is more reasonable to keep this call cleaner?
 		List<GameTagging> dudeGameTags = gameTaggingSvc.list(currentDude, game.getId());
 		gameDTO.setDudeTaggings(modelMapper.map(dudeGameTags, new TypeToken<List<GameTaggingBasicDTO>>() {}.getType()));
+
+		Page<GameReview> gameReviews = gameReviewSvc.list(game.getId(),
+			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("reviewDate"))));
+		gameDTO.setGameReviews(gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class)));
 
 		return gameDTO;
 	}

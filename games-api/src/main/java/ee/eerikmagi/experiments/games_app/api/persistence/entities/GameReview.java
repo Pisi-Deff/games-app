@@ -1,10 +1,12 @@
 package ee.eerikmagi.experiments.games_app.api.persistence.entities;
 
-import lombok.Data;
-
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+
+import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 @Entity
 @Data
@@ -28,6 +30,7 @@ public class GameReview {
 
     private String review;
 
+	@Generated(GenerationTime.INSERT)
     @Column(insertable = false, updatable = false)
     private LocalDateTime reviewDate;
 }

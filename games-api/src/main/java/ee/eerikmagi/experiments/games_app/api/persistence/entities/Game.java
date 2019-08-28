@@ -1,11 +1,13 @@
 package ee.eerikmagi.experiments.games_app.api.persistence.entities;
 
-import lombok.Data;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -21,10 +23,4 @@ public class Game {
 
     @NotNull
     private LocalDate releaseDate;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "game")
-    private List<GameTagging> taggings;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "game")
-	private List<GameReview> reviews;
 }

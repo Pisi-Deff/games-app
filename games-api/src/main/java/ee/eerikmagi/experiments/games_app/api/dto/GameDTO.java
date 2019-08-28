@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 
 @Getter
@@ -16,4 +17,5 @@ public class GameDTO {
 	private LocalDate releaseDate;
 	private Slice<GameTagDTO> tags;
 	private List<GameTaggingBasicDTO> dudeTaggings;
+	private Page<GameReviewDTO> gameReviews;
 }
