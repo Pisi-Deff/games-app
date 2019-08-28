@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
@@ -26,6 +27,8 @@ public class TagController {
 	@ResponseBody
 	public Slice<TagDTO> get(
 		@RequestParam(required = false) String name,
+
+		@PageableDefault
 		Pageable pageable
 	) {
 		// there's currently no way to specify `ignoreCase()` over annotations nor via request
