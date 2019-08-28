@@ -24,7 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthenticationFilter;
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthorizationFilter;
-import ee.eerikmagi.experiments.games_app.api.util.CurrentDudeProcessor;
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDudeProcessor;
 
 @SpringBootApplication
 public class GamesAPIApplication {

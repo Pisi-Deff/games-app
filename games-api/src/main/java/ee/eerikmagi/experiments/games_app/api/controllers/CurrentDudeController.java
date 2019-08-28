@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.dto.DudeDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
-import ee.eerikmagi.experiments.games_app.api.util.CurrentDude;
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 
 @RestController
 @RequestMapping("currentDude")

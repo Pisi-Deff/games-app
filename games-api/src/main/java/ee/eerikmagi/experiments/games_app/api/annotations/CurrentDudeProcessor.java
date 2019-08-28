@@ -1,4 +1,4 @@
-package ee.eerikmagi.experiments.games_app.api.util;
+package ee.eerikmagi.experiments.games_app.api.annotations;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.services.IDudeService;
+import ee.eerikmagi.experiments.games_app.api.util.DudeReference;
 
 @Component
 @AllArgsConstructor(onConstructor_ = @Autowired)

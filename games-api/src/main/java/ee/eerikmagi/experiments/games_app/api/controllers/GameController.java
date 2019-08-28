@@ -18,7 +18,7 @@ import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
 import ee.eerikmagi.experiments.games_app.api.services.IGameService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
-import ee.eerikmagi.experiments.games_app.api.util.CurrentDude;
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 
 @RestController
 @RequestMapping("games")

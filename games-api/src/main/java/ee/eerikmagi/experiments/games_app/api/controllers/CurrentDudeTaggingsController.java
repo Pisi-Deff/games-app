@@ -12,7 +12,7 @@ import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
-import ee.eerikmagi.experiments.games_app.api.util.CurrentDude;
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
 
 @RestController
 @RequestMapping("currentDude/taggings")
