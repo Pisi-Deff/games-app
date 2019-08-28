@@ -32,7 +32,7 @@ public class DudeService implements IDudeService, UserDetailsService {
 
 	@Override
 	public Dude get(long id) {
-		return dudeRep.getById(id);
+		return dudeRep.getOne(id);
 	}
 
 	@Override
