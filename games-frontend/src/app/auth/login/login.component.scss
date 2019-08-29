@@ -2,10 +2,11 @@
 	display: flex;
 	justify-content: center;
 	padding: 100px 0;
-}
 
-.icon--button {
-	cursor: pointer;
+	.mat-form-field {
+		width: 100%;
+		min-width: 300px;
+	}
 }
 
 .mat-card-header {

@@ -6,4 +6,51 @@
 	<span class="spacer"></span>
 </mat-toolbar>
 
-<p>new-game works!</p>
+<div class="container">
+	<form class="game" role="form" novalidate
+		(ngSubmit)="create()" [formGroup]="form"
+	>
+		<mat-card>
+			<mat-card-header>
+				<mat-card-title>New Game</mat-card-title>
+			</mat-card-header>
+			<mat-card-content class="game__content">
+				<mat-card *ngIf="error"><!-- TODO: fix appearance: red outline, icon alignment -->
+					<mat-icon color="accent">error_outline</mat-icon>
+					<span [ngSwitch]="error">
+						<span *ngSwitchCase="'some-issue'">Hello World.</span><!-- TODO -->
+						<span *ngSwitchDefault>There was an unexpected error. Please try again.</span>
+					</span>
+				</mat-card>
+
+				<p>
+					<mat-form-field appearance="outline">
+						<mat-label>Name</mat-label>
+						<input matInput formControlName="name" name="name" required />
+					</mat-form-field>
+				</p>
+				<p>
+					<mat-form-field appearance="outline">
+						<mat-label>Description</mat-label>
+						<textarea matInput formControlName="description" name="description"></textarea>
+					</mat-form-field>
+				</p>
+				<p>
+					<mat-form-field appearance="outline">
+						<mat-label>Release Date</mat-label>
+						<input matInput formControlName="releaseDate" name="releaseDate" [matDatepicker]="picker" required />
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+				</p>
+			</mat-card-content>
+
+			<mat-card-actions align="end">
+				<mat-spinner *ngIf="creating" color="primary" diameter="36"></mat-spinner>
+				<button mat-flat-button color="primary" type="submit" [disabled]="creating">
+					Create
+				</button>
+			</mat-card-actions>
+		</mat-card>
+	</form>
+</div>

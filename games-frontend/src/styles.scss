@@ -3,38 +3,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 table {
 	width: 100%;
-}
 
-.mat-form-field {
-	width: 100%;
-	min-width: 300px;
+	.table-row--even {
+		background-color: #fcfcfc;
+	}
 }
 
 .mat-icon {
 	user-select: none;
-}
 
-.mat-icon.icon--spin {
-	animation: spin 500ms infinite linear;
-}
-
-@keyframes spin {
-	0% {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
+	&.icon--button {
+		cursor: pointer;
 	}
-	100% {
-		-webkit-transform: rotate(359deg);
-		transform: rotate(359deg);
+
+	&.icon--spin {
+		animation: spin 500ms infinite linear;
+	}
+
+	@keyframes spin {
+		0% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		100% {
+			-webkit-transform: rotate(359deg);
+			transform: rotate(359deg);
+		}
+	}
+}
+
+.mat-card {
+	.mat-divider.mat-divider-horizontal.padded {
+		margin: 16px 0;
 	}
 }
 
 .spacer {
 	flex: 1 1 auto;
-}
-
-.table-row--even {
-	background-color: #fcfcfc;
 }
 
 .container {

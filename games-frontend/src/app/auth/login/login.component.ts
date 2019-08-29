@@ -17,7 +17,7 @@ export class LoginComponent {
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private authSvc: AuthService
+		private authSvc: AuthService,
 	) {
 		this.form = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
@@ -39,7 +39,7 @@ export class LoginComponent {
 		this.loggingIn = true;
 		this.authSvc.login(this.f.email.value, this.f.pass.value)
 			.pipe(first())
-			.subscribe((result) => {
+			.subscribe(result => {
 				const {success, error} = result;
 				this.loggingIn = false;
 

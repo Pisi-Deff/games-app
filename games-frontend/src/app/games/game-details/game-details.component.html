@@ -13,6 +13,7 @@
 		</mat-card-header>
 		<mat-card-content class="game__content">
 			<mat-divider></mat-divider>
+
 			<div class="game__content__main">
 				<div class="game__description">
 					<span *ngIf="game.description; else noDescription">
@@ -23,7 +24,7 @@
 					</ng-template>
 				</div>
 
-				<mat-divider [inset]="true"></mat-divider>
+				<mat-divider [inset]="true" class="padded"></mat-divider>
 
 				<div class="game__tags">
 					<!--

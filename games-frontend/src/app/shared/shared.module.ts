@@ -21,6 +21,7 @@ import {
 	MatToolbarModule,
 	MatTooltipModule,
 } from '@angular/material';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
 	declarations: [],
@@ -44,6 +45,7 @@ import {
 		MatInputModule,
 		MatListModule,
 		MatMenuModule,
+		MatMomentDateModule,
 		MatPaginatorModule,
 		MatProgressSpinnerModule,
 		MatSortModule,
