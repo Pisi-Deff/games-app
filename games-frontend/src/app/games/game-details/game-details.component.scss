@@ -1,27 +1,22 @@
-.container {
-	display: flex;
-	justify-content: center;
-}
-
 .game {
 	width: 600px;
 	margin-top: 16px;
-}
 
-.game__content {
-	display: flex;
-}
+	.game__content {
+		display: flex;
 
-.game__content__main {
-	flex-grow: 1;
-	padding: 16px;
-}
+		.game__content__main {
+			flex-grow: 1;
+			padding: 16px;
 
-.game__content__main > mat-divider {
-	margin: 16px 0;
-}
+			> mat-divider {
+				margin: 16px 0;
+			}
+		}
+	}
 
-.game__properties {
-	position: relative;
-	flex-grow: 0;
+	.game__properties {
+		position: relative;
+		flex-grow: 0;
+	}
 }

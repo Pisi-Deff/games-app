@@ -36,3 +36,8 @@ table {
 .table-row--even {
 	background-color: #fcfcfc;
 }
+
+.container {
+	display: flex;
+	justify-content: center;
+}
