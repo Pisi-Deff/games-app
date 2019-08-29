@@ -1,4 +1,4 @@
-export class Slice<T> {
+export interface Slice<T> {
 	content: T[];
 	pageable: {
 		offset: number,
