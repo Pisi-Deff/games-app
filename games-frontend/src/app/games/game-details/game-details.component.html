@@ -7,7 +7,7 @@
 </mat-toolbar>
 
 <div class="container">
-	<mat-card *ngIf="game | async as game" class="game">
+	<mat-card *ngIf="game" class="game">
 		<mat-card-header>
 			<mat-card-title>{{game.name}}</mat-card-title>
 		</mat-card-header>
@@ -15,32 +15,22 @@
 			<mat-divider></mat-divider>
 
 			<div class="game__content__main">
-				<div class="game__description">
+				<p class="game__description">
 					<span *ngIf="game.description; else noDescription">
 						{{game.description}}
 					</span>
 					<ng-template #noDescription>
 						<em>No description.</em>
 					</ng-template>
-				</div>
+				</p>
 
-				<mat-divider [inset]="true" class="padded"></mat-divider>
+				<mat-divider [inset]="true"></mat-divider>
 
-				<div class="game__tags">
-					<!--
-						TODO: potential design:
-
-						1) extend GameDTO with complete list of gametags that have been tagged by current dude for game
-						2) display first X tags merged with current dude's tags
-						3) when "load more tags" clicked, load additional slice of tags & remerge with current dude's tags
-
-						problem: why not merge serverside into single tags list with 'dudetagged' bool?
-							inner problem: how would slices work then?
-					-->
+				<p class="game__tags">
 <!--				<mat-form-field class="example-chip-list">-->
-					<mat-chip-list aria-label="Tags" selectable="false">
-<!--					<mat-chip-list #chipList aria-label="Tags" selectable="false">-->
-						<app-game-tag *ngFor="let tag of game.tags.content" [tag]="tag"></app-game-tag>
+					<mat-chip-list #chipList aria-label="Tags">
+						<app-game-tag *ngFor="let tag of tags" [tag]="tag"
+							[selected]="isSelected(tag)"></app-game-tag>
 <!--						<input-->
 <!--							placeholder="New fruit..."-->
 <!--							#fruitInput-->
@@ -50,6 +40,9 @@
 <!--							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
 <!--							[matChipInputAddOnBlur]="addOnBlur"-->
 <!--							(matChipInputTokenEnd)="add($event)">-->
+						<button *ngIf="hasMoreTags" mat-button type="button"
+							(click)="loadMoreTags()" [disabled]="loadingMoreTags"
+						>{{loadingMoreTags ? 'Loading...' : 'Load more...'}}</button>
 					</mat-chip-list>
 <!--					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
 <!--						<mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">-->
@@ -57,7 +50,7 @@
 <!--						</mat-option>-->
 <!--					</mat-autocomplete>-->
 <!--				</mat-form-field>-->
-				</div>
+				</p>
 			</div>
 
 			<mat-divider vertical></mat-divider>

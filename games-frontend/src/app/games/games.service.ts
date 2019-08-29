@@ -7,6 +7,8 @@ import {SortDirection} from '@angular/material';
 import {Page} from '../shared/page';
 import {environment} from '../../environments/environment';
 import {GameCreation} from './new-game/game-creation';
+import {GameTag} from './common/game-tag';
+import {Slice} from '../shared/slice';
 
 @Injectable({
 	providedIn: 'root'
@@ -40,5 +42,9 @@ export class GamesService {
 
 	create(game: GameCreation): Observable<GameDetailed> {
 		return this.http.post<GameDetailed>(`${environment.apiURI}/games`, game);
+	}
+
+	getTags(gameId: number, page: number): Observable<Slice<GameTag>> {
+		return this.http.get<Slice<GameTag>>(`${environment.apiURI}/games/${gameId}/tags?page=${page}`);
 	}
 }

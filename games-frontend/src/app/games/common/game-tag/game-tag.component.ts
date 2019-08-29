@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {GameTag} from '../game-tag';
 
 @Component({
@@ -11,6 +11,12 @@ export class GameTagComponent {
 
 	@Input()
 	tag: GameTag;
+
+	@Input()
+	selected = false;
+
+	@Input()
+	disabled = false;
 
 	constructor() {}
 
