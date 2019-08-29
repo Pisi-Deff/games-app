@@ -37,6 +37,7 @@
 		<ng-container matColumnDef="topTags">
 			<th mat-header-cell *matHeaderCellDef>Tags</th>
 			<td mat-cell *matCellDef="let element">
+				<!-- TODO: fix tags having a :focus style which makes them seems selectable -->
 				<mat-chip-list selectable="false">
 					<app-game-tag *ngFor="let tag of element.topTags" [tag]="tag"></app-game-tag>
 				</mat-chip-list>
