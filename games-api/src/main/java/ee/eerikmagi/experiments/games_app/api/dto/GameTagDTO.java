@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GameTagDTO implements Comparable<GameTagDTO> {
+	private long tagId;
 	private String tagName;
 	private long counter;
 
