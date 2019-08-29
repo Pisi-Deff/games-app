@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -9,6 +9,10 @@ import {SharedModule} from './shared/shared.module';
 import {MainUiComponent} from './main-ui/main-ui.component';
 import {PageNotFoundComponent} from './errors/page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
+import {registerLocaleData} from '@angular/common';
+import locale from '@angular/common/locales/en-GB';
+
+registerLocaleData(locale);
 
 @NgModule({
 	declarations: [
@@ -24,7 +28,9 @@ import {HttpClientModule} from '@angular/common/http';
 		AuthModule,
 		AppRoutingModule,
 	],
-	providers: [],
+	providers: [
+		{provide: LOCALE_ID, useValue: 'en-GB'},
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {
