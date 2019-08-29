@@ -24,7 +24,7 @@ public class CurrentDudeTaggingsController {
 
 	@GetMapping
 	@ResponseBody
-	public List<GameTaggingDTO> listTaggings(@RequestParam(required = false) Long gameId, @CurrentDude Dude currentDude) {
+	public List<GameTaggingDTO> list(@RequestParam(required = false) Long gameId, @CurrentDude Dude currentDude) {
 		List<GameTagging> gameTaggings;
 
 		if (gameId != null) {

@@ -8,5 +8,6 @@ import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameReview;
 
 public interface IGameReviewRepository extends JpaRepository<GameReview, Long> {
 	Page<GameReview> getByGameId(long gameId, Pageable pageable);
+	Page<GameReview> getByDudeId(long dudeId, Pageable pageable);
 	GameReview getByGameIdAndDudeId(long gameId, long dudeId);
 }

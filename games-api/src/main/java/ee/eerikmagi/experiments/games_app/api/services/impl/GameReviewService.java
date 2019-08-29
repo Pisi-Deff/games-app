@@ -19,8 +19,18 @@ public class GameReviewService implements IGameReviewService {
 	private IGameService gameSvc;
 
 	@Override
-	public Page<GameReview> list(long gameId, Pageable pageable) {
+	public Page<GameReview> getByGameId(long gameId, Pageable pageable) {
 		return gameReviewRep.getByGameId(gameId, pageable);
+	}
+
+	@Override
+	public Page<GameReview> getByDudeId(long dudeId, Pageable pageable) {
+		return gameReviewRep.getByDudeId(dudeId, pageable);
+	}
+
+	@Override
+	public GameReview getByGameIdAndDudeId(long gameId, long dudeId) {
+		return gameReviewRep.getByGameIdAndDudeId(gameId, dudeId);
 	}
 
 	@Override
@@ -36,10 +46,5 @@ public class GameReviewService implements IGameReviewService {
 		if (gr.getDude().equals(dude)) {
 			gameReviewRep.delete(gr);
 		}
-	}
-
-	@Override
-	public GameReview getByGameIdAndDudeId(long gameId, long dudeId) {
-		return gameReviewRep.getByGameIdAndDudeId(gameId, dudeId);
 	}
 }

@@ -62,7 +62,7 @@ public class GameController {
 		List<GameTagging> dudeGameTags = gameTaggingSvc.list(currentDude, game.getId());
 		gameDTO.setDudeTaggings(modelMapper.map(dudeGameTags, new TypeToken<List<GameTaggingBasicDTO>>() {}.getType()));
 
-		Page<GameReview> gameReviews = gameReviewSvc.list(game.getId(),
+		Page<GameReview> gameReviews = gameReviewSvc.getByGameId(game.getId(),
 			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("reviewDate"))));
 		gameDTO.setReviews(gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class)));
 

@@ -8,46 +8,37 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
-import ee.eerikmagi.experiments.games_app.api.dto.GameReviewCreationDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.GameReviewDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameReview;
+import ee.eerikmagi.experiments.games_app.api.services.IDudeService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameReviewService;
+import ee.eerikmagi.experiments.games_app.api.util.DudeReference;
 
 @RestController
-@RequestMapping("games/{gameId}/reviews")
+@RequestMapping("currentDude/reviews")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor(onConstructor_ = @Autowired)
-public class GameReviewsController {
+public class CurrentDudeReviewsController {
 	private ModelMapper modelMapper;
 	private IGameReviewService gameReviewSvc;
+	private IDudeService dudeSvc;
 
 	@GetMapping
 	@ResponseBody
-	public Page<GameReviewDTO> list(
-		@PathVariable long gameId,
+	public Page<GameReviewDTO> listReviews(
+		@CurrentDude DudeReference currentDude,
 
 		@PageableDefault
 		@SortDefault(sort = "reviewDate", direction = Sort.Direction.DESC)
 		Pageable pageable
 	) {
-		Page<GameReview> gameReviews = gameReviewSvc.getByGameId(gameId, pageable);
-		return gameReviews.map(r -> modelMapper.map(r, GameReviewDTO.class));
-	}
-
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	@ResponseBody
-	public GameReviewDTO add(@PathVariable long gameId,
-		@RequestBody GameReviewCreationDTO review,
-		@CurrentDude Dude currentDude
-	) {
-		GameReview gr = modelMapper.map(review, GameReview.class);
-		return modelMapper.map(gameReviewSvc.add(currentDude, gameId, gr), GameReviewDTO.class);
+		Page<GameReview> gameReviews = gameReviewSvc.getByDudeId(
+			dudeSvc.getIdByReference(currentDude), pageable);
+		return gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class));
 	}
 
 	@DeleteMapping("/{reviewId}")

@@ -19,15 +19,27 @@ public class DudeService implements IDudeService, UserDetailsService {
 	private IDudeRepository dudeRep;
 
 	@Override
-	public long getIdByEmail(String email) {
+	public Long getIdByEmail(String email) {
 		// TODO: redis
 		return dudeRep.getIdByEmailIgnoreCase(email);
 	}
 
 	@Override
-	public long getIdByUUID(String uuid) {
+	public Long getIdByUUID(String uuid) {
 		// TODO: redis
 		return dudeRep.getIdByUuid(uuid);
+	}
+
+	@Override
+	public Long getIdByReference(DudeReference dudeRef) {
+		if (dudeRef.hasId()) {
+			return dudeRef.getId();
+		} else if (dudeRef.hasEmail()) {
+			return getIdByEmail(dudeRef.getEmail());
+		} else if (dudeRef.hasUUID()) {
+			return getIdByUUID(dudeRef.getUuid());
+		}
+		return null;
 	}
 
 	@Override

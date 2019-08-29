@@ -10,6 +10,6 @@ public interface IDudeRepository extends JpaRepository<Dude, Long> {
 	Dude getByUuid(String uuid);
 	Dude getByEmailIgnoreCase(String email);
 
-	long getIdByUuid(String uuid);
-	long getIdByEmailIgnoreCase(String email);
+	Long getIdByUuid(String uuid);
+	Long getIdByEmailIgnoreCase(String email);
 }
