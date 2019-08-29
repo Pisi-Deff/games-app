@@ -37,4 +37,9 @@ public class GameReviewService implements IGameReviewService {
 			gameReviewRep.delete(gr);
 		}
 	}
+
+	@Override
+	public GameReview getByGameIdAndDudeId(long gameId, long dudeId) {
+		return gameReviewRep.getByGameIdAndDudeId(gameId, dudeId);
+	}
 }

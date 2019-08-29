@@ -17,5 +17,6 @@ public class GameDTO {
 	private LocalDate releaseDate;
 	private Slice<GameTagDTO> tags;
 	private List<GameTaggingBasicDTO> dudeTaggings;
-	private Page<GameReviewDTO> gameReviews;
+	private Page<GameReviewDTO> reviews;
+	private GameReviewDTO dudeReview;
 }

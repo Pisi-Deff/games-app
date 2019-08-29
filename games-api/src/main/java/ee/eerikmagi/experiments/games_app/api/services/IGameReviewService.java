@@ -10,4 +10,5 @@ public interface IGameReviewService {
 	Page<GameReview> list(long gameId, Pageable pageable);
 	GameReview add(Dude currentDude, long gameId, GameReview gr);
 	void delete(Dude currentDude, long reviewId);
+	GameReview getByGameIdAndDudeId(long gameId, long dudeId);
 }

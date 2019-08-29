@@ -64,7 +64,10 @@ public class GameController {
 
 		Page<GameReview> gameReviews = gameReviewSvc.list(game.getId(),
 			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("reviewDate"))));
-		gameDTO.setGameReviews(gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class)));
+		gameDTO.setReviews(gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class)));
+
+		GameReview currentDudeReview = gameReviewSvc.getByGameIdAndDudeId(game.getId(), currentDude.getId());
+		gameDTO.setDudeReview(modelMapper.map(currentDudeReview, GameReviewDTO.class));
 
 		return gameDTO;
 	}
