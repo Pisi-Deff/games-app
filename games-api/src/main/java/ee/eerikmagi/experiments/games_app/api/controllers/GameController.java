@@ -67,7 +67,9 @@ public class GameController {
 		gameDTO.setReviews(gameReviews.map(gr -> modelMapper.map(gr, GameReviewDTO.class)));
 
 		GameReview currentDudeReview = gameReviewSvc.getByGameIdAndDudeId(game.getId(), currentDude.getId());
-		gameDTO.setDudeReview(modelMapper.map(currentDudeReview, GameReviewDTO.class));
+		if (currentDudeReview != null) {
+			gameDTO.setDudeReview(modelMapper.map(currentDudeReview, GameReviewDTO.class));
+		}
 
 		return gameDTO;
 	}
