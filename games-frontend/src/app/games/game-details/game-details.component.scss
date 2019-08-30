@@ -5,14 +5,35 @@
 	.game__content {
 		display: flex;
 
+		> div {
+			padding: 0px 16px;
+
+			&:first-child {
+				padding-left: 0;
+			}
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+
 		.game__content__main {
 			flex-grow: 1;
-			padding: 16px;
 		}
-	}
 
-	.game__properties {
-		position: relative;
-		flex-grow: 0;
+		.game__properties {
+			position: relative;
+			flex-grow: 0;
+			max-width: 40%;
+
+			.release-date {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				> mat-icon {
+					margin-right: 4px;
+				}
+			}
+		}
 	}
 }

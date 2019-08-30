@@ -5,6 +5,7 @@ import {GamesService} from '../games.service';
 import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {GameTag} from '../common/game-tag';
+import * as moment from 'moment';
 
 @Component({
 	templateUrl: './game-details.component.html',
@@ -16,6 +17,8 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 	tagsNextPage = 1;
 	hasMoreTags: boolean;
 	loadingMoreTags = false;
+	releaseDate: string;
+	tmpReleaseDate2 = moment().format('LL');
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -27,11 +30,12 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 				takeUntil(this.ngUnsubscribe),
 				switchMap(params => this.gameSvc.get(+params.get('id')))
 			)
-			.subscribe(gd => {
-				this.game = gd;
-				this.tags = gd.tags.content;
-				this.tagsNextPage = gd.tags.pageable.pageNumber + 1;
-				this.hasMoreTags = !gd.tags.last;
+			.subscribe(game => {
+				this.game = game;
+				this.tags = game.tags.content;
+				this.tagsNextPage = game.tags.pageable.pageNumber + 1;
+				this.hasMoreTags = !game.tags.last;
+				this.releaseDate = moment(game.releaseDate).format('LL');
 			});
 	}
 
@@ -61,7 +65,9 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 	private mergeTags(extraTags: GameTag[]) {
 		this.tags = [
 			...this.tags,
-			...extraTags.filter(extraTag => this.tags.find(t => t.tagId === extraTag.tagId) == null),
+			...extraTags.filter(
+				extraTag => this.tags.find(t => t.tagId === extraTag.tagId) == null
+			),
 		];
 	}
 }

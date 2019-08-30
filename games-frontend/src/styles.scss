@@ -42,7 +42,12 @@ table {
 	flex: 1 1 auto;
 }
 
-.container {
+.hcenter {
 	display: flex;
 	justify-content: center;
+}
+
+.vcenter {
+	display: flex;
+	align-items: center;
 }

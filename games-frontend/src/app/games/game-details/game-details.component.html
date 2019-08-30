@@ -6,14 +6,15 @@
 	<span class="spacer"></span>
 </mat-toolbar>
 
-<div class="container">
+<div class="hcenter">
 	<mat-card *ngIf="game" class="game">
 		<mat-card-header>
 			<mat-card-title>{{game.name}}</mat-card-title>
 		</mat-card-header>
-		<mat-card-content class="game__content">
-			<mat-divider></mat-divider>
 
+		<mat-divider></mat-divider>
+
+		<mat-card-content class="game__content">
 			<div class="game__content__main">
 				<p class="game__description">
 					<span *ngIf="game.description; else noDescription">
@@ -56,21 +57,48 @@
 			<mat-divider vertical></mat-divider>
 
 			<div class="game__properties">
-				<mat-list dense>
-					<h3 matSubheader>Release Date</h3>
-					<mat-list-item>
-						<mat-icon matListIcon
-							matTooltip="Windows" matTooltipPosition="before"
-						>desktop_windows</mat-icon>
-						<p>{{game.releaseDate}}</p>
-					</mat-list-item>
-					<mat-divider [inset]="true"></mat-divider>
-					<h3 matSubheader>Something Else</h3>
-					<mat-list-item>
-						<p matLine>Hello</p>
-						<p matLine>World</p>
-					</mat-list-item>
-				</mat-list>
+				<div>
+					<h4>Release Date</h4>
+					<div class="release-date">
+						<mat-icon matTooltip="Windows" matTooltipPosition="before">desktop_windows</mat-icon>
+						<span>{{releaseDate}}</span>
+					</div>
+
+						<!-- fake date just to see what multiple release dates would look like -->
+					<div class="release-date">
+						<mat-icon matTooltip="Some Other Console or something" matTooltipPosition="before">videogame_asset</mat-icon>
+						<span>{{tmpReleaseDate2}}</span>
+					</div>
+				</div>
+
+				<!-- dummy data -->
+				<div>
+					<h4>Universe</h4>
+					<div>
+						*universe that game takes place in*
+					</div>
+				</div>
+
+				<div>
+					<h4>Series</h4>
+					<div>
+						*series*
+					</div>
+				</div>
+
+				<div>
+					<h4>Prequel</h4>
+					<div>
+						*previous game*
+					</div>
+				</div>
+
+				<div>
+					<h4>Sequel</h4>
+					<div>
+						*next game*
+					</div>
+				</div>
 			</div>
 		</mat-card-content>
 	</mat-card>
