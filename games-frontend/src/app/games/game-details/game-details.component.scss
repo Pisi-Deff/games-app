@@ -6,13 +6,13 @@
 		display: flex;
 
 		> div {
-			padding: 0px 16px;
+			margin: 0px 16px;
 
 			&:first-child {
-				padding-left: 0;
+				margin-left: 0;
 			}
 			&:last-child {
-				padding-right: 0;
+				margin-right: 0;
 			}
 		}
 
@@ -21,9 +21,20 @@
 		}
 
 		.game__properties {
+			padding-top: 16px;
 			position: relative;
 			flex-grow: 0;
 			max-width: 40%;
+
+			.box-art {
+				display: flex;
+				border: 1px solid black;
+
+				> img {
+					width: 100px;
+					flex-grow: 1;
+				}
+			}
 
 			.release-date {
 				display: flex;
