@@ -6,6 +6,7 @@ import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {GameTag} from '../common/game-tag';
 import * as moment from 'moment';
+import {GameReview} from '../common/game-review';
 
 @Component({
 	templateUrl: './game-details.component.html',
@@ -13,12 +14,18 @@ import * as moment from 'moment';
 })
 export class GameDetailsComponent implements OnInit, OnDestroy {
 	game: GameDetailed;
+	releaseDate: string;
+	tmpReleaseDate2 = moment().format('LL');
+
 	tags: GameTag[];
 	tagsNextPage = 1;
 	hasMoreTags: boolean;
 	loadingMoreTags = false;
-	releaseDate: string;
-	tmpReleaseDate2 = moment().format('LL');
+
+	reviews: GameReview[] = [];
+	reviewsCount = 0;
+	loadingReviews = true; // TODO: implement
+	reviewsError = false;
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -32,10 +39,14 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 			)
 			.subscribe(game => {
 				this.game = game;
+				this.releaseDate = moment(game.releaseDate).format('LL');
+
 				this.tags = game.tags.content;
 				this.tagsNextPage = game.tags.pageable.pageNumber + 1;
 				this.hasMoreTags = !game.tags.last;
-				this.releaseDate = moment(game.releaseDate).format('LL');
+
+				this.reviews = game.reviews.content;
+				this.reviewsCount = game.reviews.totalElements;
 			});
 	}
 

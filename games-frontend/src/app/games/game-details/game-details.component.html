@@ -10,6 +10,7 @@
 	<mat-card *ngIf="game" class="game">
 		<mat-card-header>
 			<mat-card-title>{{game.name}}</mat-card-title>
+			<mat-card-subtitle>AVERAGE REVIEW SCORE HERE</mat-card-subtitle>
 		</mat-card-header>
 
 		<mat-divider></mat-divider>
@@ -27,7 +28,7 @@
 
 				<mat-divider [inset]="true"></mat-divider>
 
-				<p class="game__tags">
+				<p class="game__tags"><!-- TODO: split into separate component -->
 <!--				<mat-form-field class="example-chip-list">-->
 					<mat-chip-list #chipList aria-label="Tags">
 						<app-game-tag *ngFor="let tag of tags" [tag]="tag"
@@ -104,6 +105,19 @@
 					</div>
 				</div>
 			</div>
+		</mat-card-content>
+
+		<mat-divider></mat-divider>
+
+		<mat-card-content class="reviews"><!-- TODO: split into separate component -->
+			<h2>Reviews</h2>
+
+			<app-game-review *ngFor="let review of reviews" [review]="review"></app-game-review>
+			<div *ngIf="reviews.length === 0"><em>No reviews yet!</em></div>
+
+			<mat-paginator pageSize="10" hidePageSize
+				[length]="reviewsCount"
+				showFirstLastButtons></mat-paginator>
 		</mat-card-content>
 	</mat-card>
 </div>

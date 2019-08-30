@@ -7,6 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {GameTagComponent} from './common/game-tag/game-tag.component';
 import {NewGameComponent} from './new-game/new-game.component';
+import {GameReviewComponent} from './game-details/game-review/game-review.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
 		GameDetailsComponent,
 		GameTagComponent,
 		NewGameComponent,
+		GameReviewComponent,
 	],
 	imports: [
 		SharedModule,

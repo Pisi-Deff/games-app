@@ -4,6 +4,7 @@
 
 	.game__content {
 		display: flex;
+		margin-bottom: 0;
 
 		> div {
 			margin: 0px 16px;
@@ -21,7 +22,7 @@
 		}
 
 		.game__properties {
-			padding-top: 16px;
+			padding: 16px 0;
 			position: relative;
 			flex-grow: 0;
 			max-width: 40%;
@@ -46,5 +47,9 @@
 				}
 			}
 		}
+	}
+
+	.reviews {
+		padding-top: 16px;
 	}
 }

@@ -36,6 +36,10 @@ table {
 	.mat-divider.mat-divider-horizontal.padded {
 		margin: 16px 0;
 	}
+
+	.mat-card-header .mat-card-header-text:empty {
+		margin: 0;
+	}
 }
 
 .spacer {
