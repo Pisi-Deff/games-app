@@ -1,15 +1,23 @@
-<mat-toolbar color="primary" role="heading">
-	<span>Games App</span>
-	<span class="spacer"></span>
-	<button mat-button type="button" [matMenuTriggerFor]="dudeMenu">
-		<mat-icon>person</mat-icon>
-		<span> {{dudeName}}</span>
-	</button>
-	<mat-menu #dudeMenu="matMenu" xPosition="before">
-		<button mat-menu-item type="button" (click)="logout()">
-			<mat-icon color="accent">exit_to_app</mat-icon>
-			<span>Log out</span>
+<header>
+	<mat-toolbar color="primary" role="heading">
+		<a mat-button routerLink="/">
+			<mat-icon>home</mat-icon>
+			<span> Games App</span>
+		</a>
+		<span class="spacer"></span>
+		<button mat-button type="button" [matMenuTriggerFor]="dudeMenu">
+			<mat-icon>person</mat-icon>
+			<span> {{dudeName}}</span>
 		</button>
-	</mat-menu>
-</mat-toolbar>
+		<mat-menu #dudeMenu="matMenu" xPosition="before">
+			<button mat-menu-item type="button" (click)="logout()">
+				<mat-icon color="accent">exit_to_app</mat-icon>
+				<span>Log out</span>
+			</button>
+		</mat-menu>
+	</mat-toolbar>
+</header>
+
 <router-outlet></router-outlet>
+
+<footer class="hcenter">Powered by magic.</footer>
