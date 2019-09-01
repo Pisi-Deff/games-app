@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
-import {environment} from '../../environments/environment';
-import {catchError, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {BehaviorSubject, Observable, of, Subscription} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+
+import {environment} from '../../environments/environment';
+import {Dude} from '../shared/dude';
 
 interface DudeData {
 	token: string;
@@ -17,10 +19,10 @@ interface DudeData {
 export class AuthService {
 	static readonly LS_KEY_DUDE_DATA = 'dudeData';
 
-	private dudeData: BehaviorSubject<DudeData> = new BehaviorSubject(this.dudeDataLS);
+	private dudeData: BehaviorSubject<DudeData> = new BehaviorSubject(AuthService.dudeDataLS);
 
 	constructor(private http: HttpClient, private router: Router) {
-		this.dudeData.asObservable().subscribe(data => this.dudeDataLS = data);
+		this.dudeData.asObservable().subscribe(data => AuthService.dudeDataLS = data);
 	}
 
 	login(email: string, password: string): Observable<{
@@ -31,10 +33,7 @@ export class AuthService {
 		formData.append('email', email.trim());
 		formData.append('password', password.trim());
 
-		return this.http.post<{
-			uuid: string,
-			displayName: string,
-		}>(
+		return this.http.post<Dude>(
 			`${environment.apiURI}/authenticate`,
 			formData,
 			{
@@ -87,12 +86,12 @@ export class AuthService {
 		return this.dudeData.subscribe(cb);
 	}
 
-	private get dudeDataLS() {
+	private static get dudeDataLS() {
 		const data = localStorage.getItem(AuthService.LS_KEY_DUDE_DATA);
 		return data && JSON.parse(data) || null;
 	}
 
-	private set dudeDataLS(dudeData: DudeData) {
+	private static set dudeDataLS(dudeData: DudeData) {
 		if (dudeData == null) {
 			localStorage.removeItem(AuthService.LS_KEY_DUDE_DATA);
 		} else {
