@@ -1,0 +1,8 @@
+<h2>Reviews</h2>
+
+<app-game-review *ngFor="let review of reviews" [review]="review"></app-game-review>
+<div *ngIf="reviews.length === 0"><em>No reviews yet!</em></div>
+
+<mat-paginator pageSize="10" hidePageSize
+	[length]="reviewsCount"
+	showFirstLastButtons></mat-paginator>

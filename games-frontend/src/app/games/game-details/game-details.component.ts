@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {GameDetailed} from './game-detailed';
-import {GamesService} from '../games.service';
 import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {GameTag} from '../common/game-tag';
 import * as moment from 'moment';
-import {GameReview} from '../common/game-review';
+
+import {GameDetailed} from './game-detailed';
+import {GamesService} from '../games.service';
+import {GameTag} from '../common/game-tag';
 
 @Component({
 	templateUrl: './game-details.component.html',
@@ -21,11 +21,6 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 	tagsNextPage = 1;
 	hasMoreTags: boolean;
 	loadingMoreTags = false;
-
-	reviews: GameReview[] = [];
-	reviewsCount = 0;
-	loadingReviews = true; // TODO: implement
-	reviewsError = false;
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -44,9 +39,6 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 				this.tags = game.tags.content;
 				this.tagsNextPage = game.tags.pageable.pageNumber + 1;
 				this.hasMoreTags = !game.tags.last;
-
-				this.reviews = game.reviews.content;
-				this.reviewsCount = game.reviews.totalElements;
 			});
 	}
 

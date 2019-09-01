@@ -8,6 +8,7 @@ import {SharedModule} from '../shared/shared.module';
 import {GameTagComponent} from './common/game-tag/game-tag.component';
 import {NewGameComponent} from './new-game/new-game.component';
 import {GameReviewComponent} from './game-details/game-review/game-review.component';
+import {GameReviewsComponent} from './game-details/game-reviews/game-reviews.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
 		GameTagComponent,
 		NewGameComponent,
 		GameReviewComponent,
+		GameReviewsComponent,
 	],
 	imports: [
 		SharedModule,
