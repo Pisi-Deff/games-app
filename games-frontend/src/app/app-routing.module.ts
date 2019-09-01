@@ -20,6 +20,10 @@ const routes: Routes = [
 				loadChildren: () => import('./games/games.module').then(mod => mod.GamesModule),
 			},
 			{
+				path: 'dudes',
+				loadChildren: () => import('./dudes/dudes.module').then(mod => mod.DudesModule),
+			},
+			{
 				path: '**',
 				component: PageNotFoundComponent,
 			},

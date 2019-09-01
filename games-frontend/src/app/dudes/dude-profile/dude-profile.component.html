@@ -1,0 +1,33 @@
+<article class="hcenter">
+	<mat-card *ngIf="dude | async as dude" class="dude">
+		<mat-card-header>
+			<mat-card-title>{{dude.displayName}}</mat-card-title>
+		</mat-card-header>
+
+		<mat-divider></mat-divider>
+
+		<mat-card-content>
+			*properties*
+		</mat-card-content>
+
+		<mat-divider></mat-divider>
+
+		<mat-card-content>
+			<mat-tab-group dynamicHeight="true">
+				<mat-tab label="Stuff">
+					TODO: stuff go here
+				</mat-tab>
+				<mat-tab label="Taggings">
+					<ng-template matTabContent>
+						TODO: Taggings go here
+					</ng-template>
+				</mat-tab>
+				<mat-tab label="Reviews">
+					<ng-template matTabContent>
+						TODO: Reviews go here
+					</ng-template>
+				</mat-tab>
+			</mat-tab-group>
+		</mat-card-content>
+	</mat-card>
+</article>

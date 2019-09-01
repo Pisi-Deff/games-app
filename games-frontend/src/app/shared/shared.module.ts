@@ -18,6 +18,7 @@ import {
 	MatProgressSpinnerModule,
 	MatSortModule,
 	MatTableModule,
+	MatTabsModule,
 	MatToolbarModule,
 	MatTooltipModule,
 } from '@angular/material';
@@ -50,6 +51,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 		MatProgressSpinnerModule,
 		MatSortModule,
 		MatTableModule,
+		MatTabsModule,
 		MatToolbarModule,
 		MatTooltipModule,
 	],
