@@ -37,7 +37,10 @@
 		<ng-container matColumnDef="topTags">
 			<th mat-header-cell *matHeaderCellDef>Tags</th>
 			<td mat-cell *matCellDef="let element">
-				<mat-chip-list selectable="false">
+				<span *ngIf="!element.topTags.length">
+					<em>No tags yet!</em>
+				</span>
+				<mat-chip-list selectable="false" *ngIf="element.topTags.length">
 					<app-game-tag *ngFor="let tag of element.topTags" [tag]="tag"></app-game-tag>
 				</mat-chip-list>
 				{{element.symbol}}
