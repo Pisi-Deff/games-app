@@ -1,5 +1,7 @@
 package ee.eerikmagi.experiments.games_app.api.services.impl;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +29,7 @@ public class DudeService implements IDudeService, UserDetailsService {
 	@Override
 	public Long getIdByUUID(String uuid) {
 		// TODO: redis
-		return dudeRep.getIdByUuid(uuid);
+		return dudeRep.getIdByUuid(UUID.fromString(uuid));
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class DudeService implements IDudeService, UserDetailsService {
 
 	@Override
 	public Dude getByUUID(String uuid) {
-		return dudeRep.getByUuid(uuid);
+		return dudeRep.getByUuid(UUID.fromString(uuid));
 	}
 
 	@Override
