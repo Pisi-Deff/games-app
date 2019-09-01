@@ -34,8 +34,9 @@ public class GameTaggingsController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void add(@PathVariable long gameId, @RequestBody TagDTO tag, @CurrentDude Dude currentDude) {
-		gameTaggingSvc.add(currentDude, gameId, tag.getName());
+	public GameTaggingBasicDTO add(@PathVariable long gameId, @RequestBody TagDTO tag, @CurrentDude Dude currentDude) {
+		GameTagging newGT = gameTaggingSvc.add(currentDude, gameId, tag.getName());
+		return modelMapper.map(newGT, GameTaggingBasicDTO.class);
 	}
 
 	@DeleteMapping("/{taggingId}")
