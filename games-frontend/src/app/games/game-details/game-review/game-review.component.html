@@ -5,6 +5,7 @@
 			<span *ngIf="review.score"
 				attr.aria-label="{{review.score}} out of 5 stars"
 				matTooltip="{{review.score}} out of 5 stars"
+				matTooltipPosition="after"
 			>
 				<mat-icon *ngFor="let x of ' '.repeat(review.score).split('')"
 					color="primary"
