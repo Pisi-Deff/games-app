@@ -6,7 +6,7 @@
 	<span class="spacer"></span>
 </mat-toolbar>
 
-<div class="hcenter">
+<article class="hcenter">
 	<mat-card *ngIf="game" class="game">
 		<mat-card-header>
 			<mat-card-title>{{game.name}}</mat-card-title>
@@ -24,6 +24,12 @@
 					<ng-template #noDescription>
 						<em>No description.</em>
 					</ng-template>
+				</p>
+
+				<mat-divider [inset]="true"></mat-divider>
+
+				<p>
+					*bunch of scrollable screenshots (thumbnails openable in a lightbox) from/of game here*
 				</p>
 
 				<mat-divider [inset]="true"></mat-divider>
@@ -120,4 +126,4 @@
 				showFirstLastButtons></mat-paginator>
 		</mat-card-content>
 	</mat-card>
-</div>
+</article>
