@@ -6,7 +6,6 @@ import * as moment from 'moment';
 
 import {GameDetailed} from './game-detailed';
 import {GamesService} from '../games.service';
-import {GameTag} from '../common/game-tag';
 
 @Component({
 	templateUrl: './game-details.component.html',
@@ -16,11 +15,6 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 	game: GameDetailed;
 	releaseDate: string;
 	tmpReleaseDate2 = moment().format('LL');
-
-	tags: GameTag[];
-	tagsNextPage = 1;
-	hasMoreTags: boolean;
-	loadingMoreTags = false;
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -35,42 +29,11 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 			.subscribe(game => {
 				this.game = game;
 				this.releaseDate = moment(game.releaseDate).format('LL');
-
-				this.tags = game.tags.content;
-				this.tagsNextPage = game.tags.pageable.pageNumber + 1;
-				this.hasMoreTags = !game.tags.last;
-			});
-	}
-
-	isSelected(tag): boolean {
-		return this.game.dudeTaggings.find(gt => gt.tagName === tag.tagName) != null;
-	}
-
-	loadMoreTags() {
-		this.loadingMoreTags = true;
-		this.gameSvc.getTags(this.game.id, this.tagsNextPage)
-			.subscribe(tagsSlice => {
-				this.tagsNextPage = tagsSlice.pageable.pageNumber + 1;
-				this.hasMoreTags = !tagsSlice.last;
-				this.mergeTags(tagsSlice.content);
-			}, error => {
-				// TODO: show snackbar with error
-			}, () => {
-				this.loadingMoreTags = false;
 			});
 	}
 
 	ngOnDestroy() {
 		this.ngUnsubscribe.next();
 		this.ngUnsubscribe.complete();
-	}
-
-	private mergeTags(extraTags: GameTag[]) {
-		this.tags = [
-			...this.tags,
-			...extraTags.filter(
-				extraTag => this.tags.find(t => t.tagId === extraTag.tagId) == null
-			),
-		];
 	}
 }

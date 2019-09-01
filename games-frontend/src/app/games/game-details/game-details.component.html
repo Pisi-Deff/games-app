@@ -34,30 +34,10 @@
 
 				<mat-divider [inset]="true"></mat-divider>
 
-				<p class="game__tags"><!-- TODO: split into separate component -->
-<!--				<mat-form-field class="example-chip-list">-->
-					<mat-chip-list #chipList aria-label="Tags">
-						<app-game-tag *ngFor="let tag of tags" [tag]="tag"
-							[selected]="isSelected(tag)"></app-game-tag>
-<!--						<input-->
-<!--							placeholder="New fruit..."-->
-<!--							#fruitInput-->
-<!--							[formControl]="fruitCtrl"-->
-<!--							[matAutocomplete]="auto"-->
-<!--							[matChipInputFor]="chipList"-->
-<!--							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-<!--							[matChipInputAddOnBlur]="addOnBlur"-->
-<!--							(matChipInputTokenEnd)="add($event)">-->
-						<button *ngIf="hasMoreTags" mat-button type="button"
-							(click)="loadMoreTags()" [disabled]="loadingMoreTags"
-						>{{loadingMoreTags ? 'Loading...' : 'Load more...'}}</button>
-					</mat-chip-list>
-<!--					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-<!--						<mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">-->
-<!--							{{fruit}}-->
-<!--						</mat-option>-->
-<!--					</mat-autocomplete>-->
-<!--				</mat-form-field>-->
+				<p class="game__tags">
+					<app-game-tags [initialTags]="game.tags" [dudeTaggings]="game.dudeTaggings"
+						[gameId]="game.id"
+					></app-game-tags>
 				</p>
 			</div>
 

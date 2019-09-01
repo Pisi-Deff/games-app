@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {SortDirection} from '@angular/material';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
 import {GameListItem} from './games-list/game-list-item';
 import {GameDetailed} from './game-details/game-detailed';
-import {SortDirection} from '@angular/material';
 import {Page} from '../shared/page';
 import {environment} from '../../environments/environment';
 import {GameCreation} from './new-game/game-creation';

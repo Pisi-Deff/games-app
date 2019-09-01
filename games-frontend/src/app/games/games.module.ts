@@ -1,14 +1,15 @@
 import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 import {GamesListComponent} from './games-list/games-list.component';
 import {GameDetailsComponent} from './game-details/game-details.component';
 import {GamesService} from './games.service';
-import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {GameTagComponent} from './common/game-tag/game-tag.component';
 import {NewGameComponent} from './new-game/new-game.component';
 import {GameReviewComponent} from './game-details/game-review/game-review.component';
 import {GameReviewsComponent} from './game-details/game-reviews/game-reviews.component';
+import {GameTagsComponent} from './game-details/game-tags/game-tags.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
 		NewGameComponent,
 		GameReviewComponent,
 		GameReviewsComponent,
+		GameTagsComponent,
 	],
 	imports: [
 		SharedModule,
