@@ -1,7 +1,7 @@
 <mat-card>
 	<mat-card-header class="header">
 		<mat-card-title-group>
-			<a mat-button [routerLink]="['/dude/', review.dudeUuid]">{{review.dudeDisplayName}}</a>
+			<a mat-button [routerLink]="['/dudes/', review.dude.uuid]">{{review.dude.displayName}}</a>
 			<span *ngIf="review.score"
 				attr.aria-label="{{review.score}} out of 5 stars"
 				matTooltip="{{review.score}} out of 5 stars"

@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 public class GameReviewDTO {
 	private long id;
-	private String dudeUuid;
-	private String dudeDisplayName;
+	private DudeDTO dude;
 	private int score;
 	private String review;
 	private LocalDateTime reviewDate;

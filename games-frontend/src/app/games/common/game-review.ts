@@ -1,7 +1,8 @@
+import {Dude} from '../../shared/dude';
+
 export interface GameReview {
 	id: number;
-	dudeUuid: string;
-	dudeDisplayName: string;
+	dude: Dude;
 	score: number;
 	review: string;
 	reviewDate: string;

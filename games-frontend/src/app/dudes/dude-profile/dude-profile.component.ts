@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 
-import {Dude} from '../dude';
+import {Dude} from '../../shared/dude';
 import {DudesService} from '../dudes.service';
 import {switchMap, takeUntil} from 'rxjs/operators';
 

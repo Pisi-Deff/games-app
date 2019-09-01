@@ -31,5 +31,4 @@ const routes: Routes = [
 		GamesService,
 	],
 })
-export class GamesModule {
-}
+export class GamesModule {}
