@@ -14,6 +14,7 @@ import {GamesService} from '../games.service';
 export class GameDetailsComponent implements OnInit, OnDestroy {
 	game: GameDetailed;
 	releaseDate: string;
+	futureReleaseDate: boolean;
 	tmpReleaseDate2 = moment().format('LL');
 
 	private ngUnsubscribe: Subject<any> = new Subject();
@@ -28,7 +29,9 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 			)
 			.subscribe(game => {
 				this.game = game;
-				this.releaseDate = moment(game.releaseDate).format('LL');
+				const releaseDate = moment(game.releaseDate);
+				this.releaseDate = releaseDate.format('LL');
+				this.futureReleaseDate = releaseDate.isAfter(moment(), 'day');
 			});
 	}
 

@@ -52,7 +52,10 @@
 					<h4>Release Date</h4>
 					<div class="release-date">
 						<mat-icon matTooltip="Windows" matTooltipPosition="before">desktop_windows</mat-icon>
-						<span>{{releaseDate}}</span>
+						<span>
+							{{releaseDate}}
+							<span *ngIf="futureReleaseDate" class="future">(Unreleased)</span>
+						</span>
 					</div>
 
 					<!-- fake date just to see what multiple release dates would look like -->

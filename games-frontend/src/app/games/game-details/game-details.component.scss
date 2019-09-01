@@ -42,7 +42,11 @@
 				align-items: center;
 				justify-content: space-between;
 
-				> mat-icon {
+				.future {
+					color: #980000;
+				}
+
+				mat-icon {
 					margin-right: 4px;
 				}
 			}
