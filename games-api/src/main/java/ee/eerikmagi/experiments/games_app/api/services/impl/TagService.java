@@ -2,6 +2,7 @@ package ee.eerikmagi.experiments.games_app.api.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,12 @@ public class TagService implements ITagService {
 	}
 
 	@Override
-	public Slice<Tag> list(Pageable pageable) {
-		return tagRep.findAll(pageable);
+	public Page<String> list(Pageable pageable) {
+		return tagRep.findAll(pageable).map(Tag::getName);
 	}
 
 	@Override
-	public Slice<Tag> list(String name, Pageable pageable) {
-		return tagRep.findByNameContainingIgnoreCase(name, pageable);
+	public Slice<String> list(String name, Pageable pageable) {
+		return tagRep.findByNameContainingIgnoreCase(name, pageable).map(Tag::getName);
 	}
 }
