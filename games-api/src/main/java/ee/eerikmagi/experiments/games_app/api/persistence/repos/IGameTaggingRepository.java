@@ -29,4 +29,13 @@ public interface IGameTaggingRepository extends JpaRepository<GameTagging, Long>
 			"GROUP BY gt.game.id, gt.tag.id, gt.tag.name"
 	)
 	Slice<GameTag> getGameTagsByGameId(@Param("gameId") long gameId, Pageable pageable);
+
+	@SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
+	@Query(
+		"SELECT NEW ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag(" +
+			"gt.game.id AS gameId, gt.tag.id AS tagId, gt.tag.name AS name, COUNT(gt) AS counter" +
+			") FROM GameTagging gt WHERE gt.game.id = :gameId AND UPPER(gt.tag.name) = UPPER(:tagName) " +
+			"GROUP BY gt.game.id, gt.tag.id, gt.tag.name"
+	)
+	GameTag getGameTagByGameIdAndTag(@Param("gameId") long gameId, @Param("tagName") String tagName);
 }

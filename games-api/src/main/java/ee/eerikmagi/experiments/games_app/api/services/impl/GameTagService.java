@@ -30,4 +30,9 @@ public class GameTagService implements IGameTagService {
 			PageRequest.of(0, 3, Sort.by(Sort.Order.desc("counter"), Sort.Order.asc("name"))));
 		return slice.getContent();
 	}
+
+	@Override
+	public GameTag getByGameIdAndTagName(long gameId, String name) {
+		return gameTaggingRep.getGameTagByGameIdAndTag(gameId, name);
+	}
 }

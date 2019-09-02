@@ -10,4 +10,6 @@ import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
 public interface IGameTagService {
 	Slice<GameTag> getByGameId(long gameId, Pageable pageable);
 	List<GameTag> getTop3ByGameId(long gameId);
+
+	GameTag getByGameIdAndTagName(long gameId, String name);
 }

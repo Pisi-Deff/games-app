@@ -10,10 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
+import ee.eerikmagi.experiments.games_app.api.dto.GameTagDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.GameTaggingBasicDTO;
+import ee.eerikmagi.experiments.games_app.api.dto.NewGameTaggingResponseDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.TagDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameTagging;
+import ee.eerikmagi.experiments.games_app.api.persistence.projections.GameTag;
+import ee.eerikmagi.experiments.games_app.api.services.IGameTagService;
 import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 
 @RestController
@@ -23,6 +27,7 @@ import ee.eerikmagi.experiments.games_app.api.services.IGameTaggingService;
 public class GameTaggingsController {
 	private ModelMapper modelMapper;
 	private IGameTaggingService gameTaggingSvc;
+	private IGameTagService gameTagSvc;
 
 	@GetMapping
 	@ResponseBody
@@ -34,9 +39,14 @@ public class GameTaggingsController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public GameTaggingBasicDTO add(@PathVariable long gameId, @RequestBody TagDTO tag, @CurrentDude Dude currentDude) {
+	public NewGameTaggingResponseDTO add(@PathVariable long gameId, @RequestBody TagDTO tag, @CurrentDude Dude currentDude) {
 		GameTagging newGT = gameTaggingSvc.add(currentDude, gameId, tag.getName());
-		return modelMapper.map(newGT, GameTaggingBasicDTO.class);
+		GameTag gameTag = gameTagSvc.getByGameIdAndTagName(gameId, tag.getName());
+
+		NewGameTaggingResponseDTO response = new NewGameTaggingResponseDTO();
+		response.setTag(modelMapper.map(gameTag, GameTagDTO.class));
+		response.setTagging(modelMapper.map(newGT, GameTaggingBasicDTO.class));
+		return response;
 	}
 
 	@DeleteMapping("/{taggingId}")
