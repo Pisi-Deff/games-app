@@ -1,19 +1,21 @@
-import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Subject} from 'rxjs';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
 
 import {GameTag} from '../../common/game-tag';
 import {Slice} from '../../../shared/slice';
 import {GameTagging} from '../../common/game-tagging';
 import {GamesService} from '../../games.service';
 import {GameTaggingsService} from '../../game-taggings.service';
+import {TagsService} from '../../tags.service';
+import {switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
 	selector: 'app-game-tags',
 	templateUrl: './game-tags.component.html',
 	styleUrls: ['./game-tags.component.scss'],
 })
-export class GameTagsComponent implements OnDestroy, OnChanges {
+export class GameTagsComponent implements OnDestroy, OnChanges, OnInit {
 	@Input()
 	initialTags: Slice<GameTag>;
 
@@ -29,9 +31,24 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 	loading = false;
 	tagsToggling: GameTag[];
 
+	tagInput = new FormControl();
+	tagOptions: Observable<string[]>;
+
 	private ngUnsubscribe: Subject<any> = new Subject();
 
-	constructor(private gameSvc: GamesService, private taggingSvc: GameTaggingsService, private route: ActivatedRoute) {}
+	constructor(
+		private gamesSvc: GamesService,
+		private taggingsSvc: GameTaggingsService,
+		private tagsSvc: TagsService,
+	) {}
+
+	ngOnInit() {
+		this.tagOptions = this.tagInput.valueChanges
+			.pipe(
+				takeUntil(this.ngUnsubscribe),
+				switchMap(name => this.tagsSvc.search(name))
+			);
+	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.initialTags) {
@@ -56,7 +73,7 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 
 	loadMoreTags() {
 		this.loading = true;
-		this.gameSvc.getTags(this.gameId, this.nextPage)
+		this.gamesSvc.getTags(this.gameId, this.nextPage)
 			.subscribe(tagsSlice => {
 				this.nextPage = tagsSlice.pageable.pageNumber + 1;
 				this.hasMore = !tagsSlice.last;
@@ -75,6 +92,35 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 				extraTag => this.tags.find(t => t.tagId === extraTag.tagId) == null
 			),
 		];
+		this.tags.sort(this.compareTags);
+	}
+
+	addTagging() {
+		const name: string = this.tagInput.value;
+		if (name.length <= 2) {
+			return;
+		}
+
+		// TODO: pre-do change on UI & revert in case of error instead of waiting for request to finish
+
+		this.taggingsSvc.add(this.gameId, name)
+			.subscribe(response => {
+				this.tags = this.tags.filter(t => t.tagName.trim().toUpperCase() !== name.trim().toUpperCase());
+				this.tags.push(response.tag);
+				this.tags.sort(this.compareTags);
+				this.tagInput.setValue('');
+
+				this.dudeTaggings = [
+					...this.dudeTaggings,
+					response.tagging,
+				];
+			}, () => {
+				// TODO: special handling for when user has already tagged this game with this tag
+				// load and display gametag, empty input, show snackbar notice?
+
+				// TODO: snackbar error
+
+			});
 	}
 
 	toggleTagging(tag: GameTag) {
@@ -84,7 +130,7 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 		// TODO: disable tag while request in pending
 
 		if (existingTagging) {
-			this.taggingSvc.delete(this.gameId, existingTagging.id)
+			this.taggingsSvc.delete(this.gameId, existingTagging.id)
 				.subscribe(() => {
 					this.dudeTaggings = this.dudeTaggings.filter(dt => dt !== existingTagging);
 
@@ -100,7 +146,7 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 
 				});
 		} else {
-			this.taggingSvc.add(this.gameId, tag.tagName)
+			this.taggingsSvc.add(this.gameId, tag.tagName)
 				.subscribe(response => {
 					this.tags = this.tags.filter(t => t !== tag);
 					this.tags.push(response.tag);

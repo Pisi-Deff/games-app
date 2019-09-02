@@ -1,25 +1,26 @@
-<!--<mat-form-field class="example-chip-list">-->
-<mat-chip-list #chipList aria-label="Tags">
+<mat-chip-list aria-label="Tags">
 	<app-game-tag *ngFor="let tag of tags" [tag]="tag"
 		[selected]="isSelectedTag(tag)"
 		(click)="toggleTagging(tag)"
 	></app-game-tag>
-	<!--						<input-->
-	<!--							placeholder="New fruit..."-->
-	<!--							#fruitInput-->
-	<!--							[formControl]="fruitCtrl"-->
-	<!--							[matAutocomplete]="auto"-->
-	<!--							[matChipInputFor]="chipList"-->
-	<!--							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-	<!--							[matChipInputAddOnBlur]="addOnBlur"-->
-	<!--							(matChipInputTokenEnd)="add($event)">-->
 	<button *ngIf="hasMore" mat-button type="button"
 		(click)="loadMoreTags()" [disabled]="loading"
 	>{{loading ? 'Loading...' : 'Load more...'}}</button>
 </mat-chip-list>
-<!--					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-<!--						<mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">-->
-<!--							{{fruit}}-->
-<!--						</mat-option>-->
-<!--					</mat-autocomplete>-->
-<!--				</mat-form-field>-->
+
+<div class="add-tag-form">
+	<mat-form-field>
+		<mat-label>New Tag...</mat-label>
+		<input
+			matInput
+			[formControl]="tagInput"
+			[matAutocomplete]="auto"
+		/>
+		<mat-autocomplete #auto="matAutocomplete">
+			<mat-option *ngFor="let option of tagOptions | async" [value]="option">
+				{{option}}
+			</mat-option>
+		</mat-autocomplete>
+	</mat-form-field>
+	<button type="button" mat-button (click)="addTagging()">Tag</button>
+</div>

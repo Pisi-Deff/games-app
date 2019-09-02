@@ -19,13 +19,13 @@ export class GameDetailsComponent implements OnInit, OnDestroy {
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
-	constructor(private gameSvc: GamesService, private route: ActivatedRoute) {}
+	constructor(private gamesSvc: GamesService, private route: ActivatedRoute) {}
 
 	ngOnInit() {
 		this.route.paramMap
 			.pipe(
 				takeUntil(this.ngUnsubscribe),
-				switchMap(params => this.gameSvc.get(+params.get('id')))
+				switchMap(params => this.gamesSvc.get(+params.get('id')))
 			)
 			.subscribe(game => {
 				this.game = game;

@@ -11,6 +11,7 @@ import {GameReviewComponent} from './game-details/game-review/game-review.compon
 import {GameReviewsComponent} from './game-details/game-reviews/game-reviews.component';
 import {GameTagsComponent} from './game-details/game-tags/game-tags.component';
 import {GameTaggingsService} from './game-taggings.service';
+import {TagsService} from './tags.service';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
 	providers: [
 		GamesService,
 		GameTaggingsService,
+		TagsService,
 	],
 })
 export class GamesModule {}
