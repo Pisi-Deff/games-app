@@ -2,8 +2,10 @@
 	[matBadge]="formatCounter()"
 	matBadgeDescription="tagged {{tag.counter}} times"
 >
-	<!-- TODO: remove focus style from tags, doesn't make sense -->
-	<mat-chip disableRipple="true" color="primary" [selected]="selected" [disabled]="disabled">
+	<mat-chip disableRipple="true" color="primary"
+		[selected]="selected" [disabled]="disabled"
+		(click)="handleClick($event)"
+	>
 		{{tag.tagName}}
 	</mat-chip>
 </span>

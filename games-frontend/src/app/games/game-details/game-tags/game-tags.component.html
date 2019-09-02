@@ -1,7 +1,9 @@
 <!--<mat-form-field class="example-chip-list">-->
 <mat-chip-list #chipList aria-label="Tags">
 	<app-game-tag *ngFor="let tag of tags" [tag]="tag"
-		[selected]="isSelected(tag)"></app-game-tag>
+		[selected]="isSelectedTag(tag)"
+		(click)="toggleTagging(tag)"
+	></app-game-tag>
 	<!--						<input-->
 	<!--							placeholder="New fruit..."-->
 	<!--							#fruitInput-->

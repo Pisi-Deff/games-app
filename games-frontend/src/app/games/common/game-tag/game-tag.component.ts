@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+
 import {GameTag} from '../game-tag';
 
 @Component({
@@ -18,6 +19,9 @@ export class GameTagComponent {
 	@Input()
 	disabled = false;
 
+	@Output()
+	click = new EventEmitter<MouseEvent>();
+
 	constructor() {}
 
 	formatCounter() {
@@ -31,5 +35,9 @@ export class GameTagComponent {
 		}
 
 		return counter + suffix;
+	}
+
+	handleClick(event: MouseEvent) {
+		this.click.emit(event);
 	}
 }

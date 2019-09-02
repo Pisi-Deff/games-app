@@ -10,6 +10,7 @@ import {NewGameComponent} from './new-game/new-game.component';
 import {GameReviewComponent} from './game-details/game-review/game-review.component';
 import {GameReviewsComponent} from './game-details/game-reviews/game-reviews.component';
 import {GameTagsComponent} from './game-details/game-tags/game-tags.component';
+import {GameTaggingsService} from './game-taggings.service';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
 	],
 	providers: [
 		GamesService,
+		GameTaggingsService,
 	],
 })
 export class GamesModule {}

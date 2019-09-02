@@ -27,6 +27,7 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 	nextPage = 1;
 	hasMore: boolean;
 	loading = false;
+	tagsToggling: GameTag[];
 
 	private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -40,8 +41,17 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 		}
 	}
 
-	isSelected(tag): boolean {
-		return this.dudeTaggings.find(gt => gt.tagName === tag.tagName) != null;
+	ngOnDestroy() {
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
+	}
+
+	isSelectedTag(tag: GameTag): boolean {
+		return this.getTagging(tag.tagName) != null;
+	}
+
+	getTagging(name: string): GameTagging {
+		return this.dudeTaggings.find(dt => dt.tagName.trim().toLowerCase() === name.trim().toLowerCase());
 	}
 
 	loadMoreTags() {
@@ -67,8 +77,63 @@ export class GameTagsComponent implements OnDestroy, OnChanges {
 		];
 	}
 
-	ngOnDestroy() {
-		this.ngUnsubscribe.next();
-		this.ngUnsubscribe.complete();
+	toggleTagging(tag: GameTag) {
+		const existingTagging = this.getTagging(tag.tagName);
+
+		// TODO: pre-do change on UI & revert in case of error instead of waiting for request to finish
+		// TODO: disable tag while request in pending
+
+		if (existingTagging) {
+			this.taggingSvc.delete(this.gameId, existingTagging.id)
+				.subscribe(() => {
+					this.dudeTaggings = this.dudeTaggings.filter(dt => dt !== existingTagging);
+
+					if (tag.counter === 1) {
+						this.tags = this.tags.filter(t => t !== tag);
+					} else {
+						tag.counter--;
+						this.tags = [...this.tags];
+						this.tags.sort(this.compareTags);
+					}
+				}, () => {
+					// TODO: snackbar error
+
+				});
+		} else {
+			this.taggingSvc.add(this.gameId, tag.tagName)
+				.subscribe(response => {
+					this.tags = this.tags.filter(t => t !== tag);
+					this.tags.push(response.tag);
+					this.tags.sort(this.compareTags);
+
+					this.dudeTaggings = [
+						...this.dudeTaggings,
+						response.tagging,
+					];
+				}, () => {
+					// TODO: snackbar error
+
+				});
+		}
+	}
+
+	private compareTags(a: GameTag, b: GameTag): number {
+		// counter DESC
+		if (a.counter > b.counter) {
+			return -1;
+		}
+		if (b.counter > a.counter) {
+			return 1;
+		}
+
+		// tagName ignoreCase ASC
+		if (a.tagName.toUpperCase() > b.tagName.toUpperCase()) {
+			return 1;
+		}
+		if (b.tagName.toUpperCase() > a.tagName.toUpperCase()) {
+			return -1;
+		}
+
+		return 0;
 	}
 }
