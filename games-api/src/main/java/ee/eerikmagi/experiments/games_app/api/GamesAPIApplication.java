@@ -1,5 +1,6 @@
 package ee.eerikmagi.experiments.games_app.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,9 +24,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDudeProcessor;
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthenticationFilter;
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthorizationFilter;
-import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDudeProcessor;
 
 @SpringBootApplication
 public class GamesAPIApplication {
@@ -46,7 +48,17 @@ public class GamesAPIApplication {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		CorsConfiguration cors = new CorsConfiguration();
+		cors.setAllowedMethods(Arrays.asList(
+			HttpMethod.GET.name(),
+			HttpMethod.POST.name(),
+			HttpMethod.DELETE.name(),
+			HttpMethod.PATCH.name(),
+			HttpMethod.OPTIONS.name()
+		));
+		cors.applyPermitDefaultValues();
+
+		source.registerCorsConfiguration("/**", cors);
 
 		return source;
 	}
