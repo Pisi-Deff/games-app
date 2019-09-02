@@ -9,11 +9,15 @@ import {Subscription} from 'rxjs';
 })
 export class MainUiComponent implements OnDestroy {
 	dudeName: string;
+	dudeUuid: string;
 	dudeDataSub: Subscription;
 
 	constructor(private authSvc: AuthService) {
 		this.dudeDataSub = this.authSvc.dudeDataSub(
-			data => this.dudeName = data && data.name || '');
+			data => {
+				this.dudeName = data && data.name || '';
+				this.dudeUuid = data && data.uuid || '';
+			});
 	}
 
 	ngOnDestroy() {

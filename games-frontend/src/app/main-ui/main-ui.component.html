@@ -10,6 +10,10 @@
 			<span> {{dudeName}}</span>
 		</button>
 		<mat-menu #dudeMenu="matMenu" xPosition="before">
+			<a mat-menu-item routerLink="/dudes/{{dudeUuid}}">
+				<mat-icon color="primary">person_pin</mat-icon>
+				<span>Profile</span>
+			</a>
 			<button mat-menu-item type="button" (click)="logout()">
 				<mat-icon color="accent">exit_to_app</mat-icon>
 				<span>Log out</span>
