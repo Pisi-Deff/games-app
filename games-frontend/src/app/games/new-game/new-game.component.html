@@ -24,19 +24,19 @@
 				</mat-card>
 
 				<p>
-					<mat-form-field appearance="outline">
+					<mat-form-field>
 						<mat-label>Name</mat-label>
 						<input matInput formControlName="name" name="name" required />
 					</mat-form-field>
 				</p>
 				<p>
-					<mat-form-field appearance="outline">
+					<mat-form-field>
 						<mat-label>Description</mat-label>
 						<textarea matInput formControlName="description" name="description"></textarea>
 					</mat-form-field>
 				</p>
 				<p>
-					<mat-form-field appearance="outline">
+					<mat-form-field>
 						<mat-label>Release Date</mat-label>
 						<input matInput formControlName="releaseDate" name="releaseDate" [matDatepicker]="picker" required />
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
