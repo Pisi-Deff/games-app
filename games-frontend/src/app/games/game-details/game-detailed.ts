@@ -6,9 +6,10 @@ import {GameTagging} from '../common/game-tagging';
 import {GameReview} from '../common/game-review';
 
 export interface GameDetailed extends GameBasic {
-	description: string;
+	description?: string;
 	tags: Slice<GameTag>;
 	dudeTaggings: GameTagging[];
 	reviews: Page<GameReview>;
-	dudeReview: GameReview;
+	dudeReview?: GameReview;
+	avgReviewScore?: number;
 }

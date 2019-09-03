@@ -14,6 +14,7 @@ import {GameReviewsService} from './game-reviews.service';
 import {GameTaggingsService} from './game-taggings.service';
 import {TagsService} from './tags.service';
 import {GameReviewEditComponent} from './game-details/game-review-edit/game-review-edit.component';
+import {StarsRatingComponent} from './common/stars-rating/stars-rating.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
 		GameReviewsComponent,
 		GameTagsComponent,
 		GameReviewEditComponent,
+		StarsRatingComponent,
 	],
 	entryComponents: [
 		GameReviewEditComponent,

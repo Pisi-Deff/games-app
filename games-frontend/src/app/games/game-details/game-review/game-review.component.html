@@ -5,18 +5,7 @@
 				<span>{{review.dude.displayName}}</span>
 				<strong>{{isCurrentDudeReview ? ' (You)' : ''}}</strong>
 			</a>
-			<span *ngIf="review.score"
-				attr.aria-label="{{review.score}} out of 5 stars"
-				matTooltip="{{review.score}} out of 5 stars"
-				matTooltipPosition="after"
-			>
-				<mat-icon *ngFor="let x of ' '.repeat(review.score).split('')"
-					color="primary"
-				>star</mat-icon>
-				<mat-icon *ngFor="let x of ' '.repeat(5 - review.score).split('')"
-					color="primary"
-				>star_border</mat-icon>
-			</span>
+			<app-stars-rating *ngIf="review.score" [score]="review.score"></app-stars-rating>
 			<span class="spacer"></span>
 			<span>{{reviewDate}}</span>
 		</mat-card-title-group>

@@ -5,19 +5,11 @@
 	<mat-dialog-content>
 		<div>
 			<mat-label>Score</mat-label>
+
 			<div>
-				<mat-icon *ngFor="let x of ' '.repeat(score).split(''); let i = index"
-					color="primary"
-					(click)="score = i + 1"
-					attr.aria-label="{{i + 1}} out of 5 stars"
-					matTooltip="{{i + 1}} out of 5 stars"
-				>star</mat-icon>
-				<mat-icon *ngFor="let x of ' '.repeat(5 - score).split(''); let i = index"
-					color="primary"
-					(click)="score = score + i + 1"
-					attr.aria-label="{{score + i + 1}} out of 5 stars"
-					matTooltip="{{score + i + 1}} out of 5 stars"
-				>star_border</mat-icon>
+				<app-stars-rating [score]="score" tooltips="individual"
+					(onScoreSet)="score = $event"
+				></app-stars-rating>
 			</div>
 		</div>
 

@@ -1,0 +1,36 @@
+<span
+	[attr.aria-label]="tooltips === 'combined' ? score + ' out of 5 stars' : null"
+	[matTooltip]="tooltips === 'combined' ? score + ' out of 5 stars' : null"
+	[matTooltipPosition]="tooltips === 'combined' ? 'after' : null"
+>
+	<mat-icon *ngFor="let x of ' '.repeat(fullStars).split(''); let i = index"
+		color="primary"
+		(click)="setScore(i + 1)"
+		[attr.aria-label]="tooltips === 'individual'
+			? (i + 1) + ' out of 5 stars'
+			: null"
+		[matTooltip]="tooltips === 'individual'
+			? (i + 1) + ' out of 5 stars'
+			: null"
+	>star</mat-icon>
+	<mat-icon *ngIf="halfStar"
+		color="primary"
+		(click)="setScore(fullStars + 1)"
+		[attr.aria-label]="tooltips === 'individual'
+			? (fullStars + 1) + ' out of 5 stars'
+			: null"
+		[matTooltip]="tooltips === 'individual'
+			? (fullStars + 1) + ' out of 5 stars'
+			: null"
+	>star_half</mat-icon>
+	<mat-icon *ngFor="let x of ' '.repeat(emptyStars).split(''); let i = index"
+		color="primary"
+		(click)="setScore(fullStars + 1 + (halfStar ? 1 : 0) + i)"
+		[attr.aria-label]="tooltips === 'individual'
+			? (fullStars + 1 + (halfStar ? 1 : 0) + i) + ' out of 5 stars'
+			: null"
+		[matTooltip]="tooltips === 'individual'
+			? (fullStars + 1 + (halfStar ? 1 : 0) + i) + ' out of 5 stars'
+			: null"
+	>star_border</mat-icon>
+</span>
