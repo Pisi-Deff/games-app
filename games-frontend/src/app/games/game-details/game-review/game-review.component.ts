@@ -11,6 +11,9 @@ export class GameReviewComponent implements OnInit {
 	@Input()
 	review: GameReview;
 
+	@Input()
+	isCurrentDudeReview: boolean;
+
 	reviewDate: string;
 
 	constructor() {}
