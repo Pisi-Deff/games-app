@@ -1,5 +1,8 @@
 package ee.eerikmagi.experiments.games_app.api.services.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,17 @@ public class GameReviewService implements IGameReviewService {
 	@Override
 	public GameReview getByGameIdAndDudeId(long gameId, long dudeId) {
 		return gameReviewRep.getByGameIdAndDudeId(gameId, dudeId);
+	}
+
+	@Override
+	public BigDecimal getAverageReviewScore(long gameId) {
+		// TODO: redis
+		BigDecimal avgScore = gameReviewRep.getAverageScoreByGameId(gameId);
+		if (avgScore == null) {
+			return null;
+		}
+
+		return avgScore.setScale(2, RoundingMode.HALF_UP);
 	}
 
 	@Override
