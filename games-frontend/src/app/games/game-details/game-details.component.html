@@ -10,8 +10,9 @@
 	<mat-card *ngIf="game" class="game">
 		<mat-card-header>
 			<mat-card-title>{{game.name}}</mat-card-title>
-			<mat-card-subtitle>
+			<mat-card-subtitle class="vcenter">
 				<app-stars-rating [score]="game.avgReviewScore"></app-stars-rating>
+				<span> ({{game.reviews.totalElements}} reviews)</span>
 			</mat-card-subtitle>
 		</mat-card-header>
 

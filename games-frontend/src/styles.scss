@@ -47,11 +47,11 @@ table {
 }
 
 .hcenter {
-	display: flex;
+	display: flex !important;
 	justify-content: center;
 }
 
 .vcenter {
-	display: flex;
+	display: flex !important;
 	align-items: center;
 }
