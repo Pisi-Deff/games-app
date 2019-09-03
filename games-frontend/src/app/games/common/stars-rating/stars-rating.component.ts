@@ -11,7 +11,7 @@ export class StarsRatingComponent implements OnChanges {
 	emptyStars: number;
 
 	@Input()
-	score: number;
+	score?: number;
 
 	@Input()
 	maxScore = 5;
@@ -26,7 +26,11 @@ export class StarsRatingComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.score) {
-			const rounded = Math.round(changes.score.currentValue * 2) / 2;
+			if (changes.score.currentValue == null) {
+				this.score = 0;
+			}
+
+			const rounded = Math.round(this.score * 2) / 2;
 			this.fullStars = Math.floor(rounded);
 			this.halfStar = rounded - this.fullStars > 0;
 			this.emptyStars = this.maxScore - this.fullStars - (this.halfStar ? 1 : 0);
