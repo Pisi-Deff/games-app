@@ -27,7 +27,7 @@ export class StarsRatingComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.score) {
 			const rounded = Math.round(changes.score.currentValue * 2) / 2;
-			this.fullStars = Math.floor(changes.score.currentValue);
+			this.fullStars = Math.floor(rounded);
 			this.halfStar = rounded - this.fullStars > 0;
 			this.emptyStars = this.maxScore - this.fullStars - (this.halfStar ? 1 : 0);
 		}
