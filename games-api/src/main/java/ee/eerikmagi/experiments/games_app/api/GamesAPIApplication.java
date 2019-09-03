@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -29,6 +30,7 @@ import ee.eerikmagi.experiments.games_app.api.security.JWTAuthenticationFilter;
 import ee.eerikmagi.experiments.games_app.api.security.JWTAuthorizationFilter;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class GamesAPIApplication {
 
 	public static void main(String[] args) {
