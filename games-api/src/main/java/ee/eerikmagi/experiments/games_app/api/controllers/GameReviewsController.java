@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import ee.eerikmagi.experiments.games_app.api.annotations.CurrentDude;
-import ee.eerikmagi.experiments.games_app.api.dto.GameReviewCreationDTO;
+import ee.eerikmagi.experiments.games_app.api.dto.GameReviewEditDTO;
 import ee.eerikmagi.experiments.games_app.api.dto.GameReviewDTO;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.Dude;
 import ee.eerikmagi.experiments.games_app.api.persistence.entities.GameReview;
@@ -43,11 +43,22 @@ public class GameReviewsController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public GameReviewDTO add(@PathVariable long gameId,
-		@RequestBody GameReviewCreationDTO review,
+		@RequestBody GameReviewEditDTO review,
 		@CurrentDude Dude currentDude
 	) {
 		GameReview gr = modelMapper.map(review, GameReview.class);
 		return modelMapper.map(gameReviewSvc.add(currentDude, gameId, gr), GameReviewDTO.class);
+	}
+
+	@PatchMapping("/{reviewId}")
+	public GameReviewDTO update(
+		@PathVariable long reviewId,
+		@RequestBody GameReviewEditDTO update,
+		@CurrentDude Dude currentDude
+	) {
+		GameReview gr = gameReviewSvc.get(reviewId);
+		modelMapper.map(update, gr);
+		return modelMapper.map(gameReviewSvc.update(currentDude, gr), GameReviewDTO.class);
 	}
 
 	@DeleteMapping("/{reviewId}")

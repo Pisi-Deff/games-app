@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GameReviewCreationDTO {
+public class GameReviewEditDTO {
 	private int score;
 	private String review;
 }

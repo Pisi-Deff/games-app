@@ -34,10 +34,25 @@ public class GameReviewService implements IGameReviewService {
 	}
 
 	@Override
+	public GameReview get(long id) {
+		return gameReviewRep.getOne(id);
+	}
+
+	@Override
 	public GameReview add(Dude dude, long gameId, GameReview gr) {
 		gr.setDude(dude);
 		gr.setGame(gameSvc.get(gameId));
 		return gameReviewRep.saveAndFlush(gr);
+	}
+
+	@Override
+	public GameReview update(Dude dude, GameReview gr) {
+		if (gr.getDude().equals(dude)) {
+			return gameReviewRep.saveAndFlush(gr);
+		}
+
+		// TODO: throw exception instead
+		return null;
 	}
 
 	@Override
