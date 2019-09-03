@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {MatDialog, MatPaginator} from '@angular/material';
-import {switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 
 import {GameReview} from '../../common/game-review';
 import {Page} from '../../../shared/page';
@@ -52,17 +52,30 @@ export class GameReviewsComponent implements AfterViewInit, OnChanges {
 	private loadData(): Observable<GameReview[]> {
 		this.loading = true;
 
-		// TODO: implement
-		return null;
+		return this.reviewSvc.getReviews(this.gameId, this.paginator.pageIndex)
+			.pipe(
+				map(page => {
+					this.loading = false;
+					this.reviewsCount = page.totalElements;
+
+					return page.content;
+				}),
+				catchError(() => {
+					this.loading = false;
+					// TODO: show snackbar with error
+
+					return of([]);
+				}),
+			);
 	}
 
 	openReviewDialog() {
-		const data: DialogData = {
+		const dialogData: DialogData = {
 			gameId: this.gameId,
 			review: this.dudeReview,
 		};
 
-		const dialogRef = this.dialog.open(GameReviewEditComponent, {data});
+		const dialogRef = this.dialog.open(GameReviewEditComponent, {data: dialogData});
 
 		dialogRef.afterClosed()
 			.subscribe((result: DialogResult) => {
@@ -71,7 +84,8 @@ export class GameReviewsComponent implements AfterViewInit, OnChanges {
 				}
 
 				this.dudeReview = result.review || null;
-				this.loadData();
+				this.loadData()
+					.subscribe(data => this.reviews = data);
 			});
 	}
 }
