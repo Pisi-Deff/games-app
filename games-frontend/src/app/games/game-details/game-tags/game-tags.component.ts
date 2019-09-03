@@ -8,7 +8,7 @@ import {GameTagging} from '../../common/game-tagging';
 import {GamesService} from '../../games.service';
 import {GameTaggingsService} from '../../game-taggings.service';
 import {TagsService} from '../../tags.service';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {debounceTime, switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
 	selector: 'app-game-tags',
@@ -46,6 +46,7 @@ export class GameTagsComponent implements OnDestroy, OnChanges, OnInit {
 		this.tagOptions = this.tagInput.valueChanges
 			.pipe(
 				takeUntil(this.ngUnsubscribe),
+				debounceTime(500),
 				switchMap(name => this.tagsSvc.search(name))
 			);
 	}
