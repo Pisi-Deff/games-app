@@ -1,5 +1,6 @@
 package ee.eerikmagi.experiments.games_app.api.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,8 +16,10 @@ public class GameDTO {
 	private String name;
 	private String description;
 	private LocalDate releaseDate;
+
 	private Slice<GameTagDTO> tags;
 	private List<GameTaggingBasicDTO> dudeTaggings;
 	private Page<GameReviewDTO> reviews;
 	private GameReviewDTO dudeReview;
+	private BigDecimal avgReviewScore;
 }

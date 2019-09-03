@@ -1,5 +1,6 @@
 package ee.eerikmagi.experiments.games_app.api.controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -70,6 +71,8 @@ public class GameController {
 		if (currentDudeReview != null) {
 			gameDTO.setDudeReview(modelMapper.map(currentDudeReview, GameReviewDTO.class));
 		}
+
+		gameDTO.setAvgReviewScore(BigDecimal.valueOf(3.66d)); // TODO
 
 		return gameDTO;
 	}
