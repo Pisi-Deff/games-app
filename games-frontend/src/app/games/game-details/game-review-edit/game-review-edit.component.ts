@@ -43,6 +43,11 @@ export class GameReviewEditComponent {
 	}
 
 	submit() {
+		if (this.score < 1 || this.score > 5) {
+			// TODO: show error
+			return;
+		}
+
 		this.submitting = true;
 
 		let obs: Observable<GameReview>;
