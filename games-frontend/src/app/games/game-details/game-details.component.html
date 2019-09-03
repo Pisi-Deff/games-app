@@ -99,7 +99,11 @@
 		<mat-divider></mat-divider>
 
 		<mat-card-content class="reviews">
-			<app-game-reviews [initialReviews]="game.reviews"></app-game-reviews>
+			<app-game-reviews
+				[gameId]="game.id"
+				[initialReviews]="game.reviews"
+				[dudeReview]="game.dudeReview"
+			></app-game-reviews>
 		</mat-card-content>
 	</mat-card>
 </article>

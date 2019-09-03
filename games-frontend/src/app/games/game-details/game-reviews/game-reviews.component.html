@@ -1,4 +1,11 @@
-<h2>Reviews</h2>
+<div class="vcenter">
+	<h2>Reviews</h2>
+	<span class="spacer"></span>
+	<button type="button" mat-button (click)="openReviewDialog()">
+		<mat-icon>{{dudeReview ? 'insert_comment' : 'add_comment'}}</mat-icon>
+		<span> {{dudeReview ? 'Edit Review' : 'Add Review'}}</span>
+	</button>
+</div>
 
 <app-game-review *ngFor="let review of reviews" [review]="review"></app-game-review>
 <div *ngIf="reviews.length === 0"><em>No reviews yet!</em></div>

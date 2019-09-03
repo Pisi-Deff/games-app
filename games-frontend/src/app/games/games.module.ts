@@ -10,8 +10,10 @@ import {NewGameComponent} from './new-game/new-game.component';
 import {GameReviewComponent} from './game-details/game-review/game-review.component';
 import {GameReviewsComponent} from './game-details/game-reviews/game-reviews.component';
 import {GameTagsComponent} from './game-details/game-tags/game-tags.component';
+import {GameReviewsService} from './game-reviews.service';
 import {GameTaggingsService} from './game-taggings.service';
 import {TagsService} from './tags.service';
+import {GameReviewEditComponent} from './game-details/game-review-edit/game-review-edit.component';
 
 const routes: Routes = [
 	{path: '', component: GamesListComponent},
@@ -28,6 +30,10 @@ const routes: Routes = [
 		GameReviewComponent,
 		GameReviewsComponent,
 		GameTagsComponent,
+		GameReviewEditComponent,
+	],
+	entryComponents: [
+		GameReviewEditComponent,
 	],
 	imports: [
 		SharedModule,
@@ -35,6 +41,7 @@ const routes: Routes = [
 	],
 	providers: [
 		GamesService,
+		GameReviewsService,
 		GameTaggingsService,
 		TagsService,
 	],

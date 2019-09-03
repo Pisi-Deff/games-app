@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
-import {MatPaginator} from '@angular/material';
+import {MatDialog, MatPaginator} from '@angular/material';
 import {switchMap} from 'rxjs/operators';
 
 import {GameReview} from '../../common/game-review';
-import {GamesService} from '../../games.service';
 import {Page} from '../../../shared/page';
+import {GameReviewsService} from '../../game-reviews.service';
+import {DialogData, DialogResult, GameReviewEditComponent} from '../game-review-edit/game-review-edit.component';
 
 @Component({
 	selector: 'app-game-reviews',
@@ -19,11 +20,20 @@ export class GameReviewsComponent implements AfterViewInit, OnChanges {
 	error = false; // TODO: implement
 
 	@Input()
+	gameId: number;
+
+	@Input()
 	initialReviews: Page<GameReview>;
+
+	@Input()
+	dudeReview?: GameReview;
 
 	@ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
-	constructor(private gameSvc: GamesService) {}
+	constructor(
+		private reviewSvc: GameReviewsService,
+		private dialog: MatDialog,
+	) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes.initialReviews) {
@@ -44,5 +54,24 @@ export class GameReviewsComponent implements AfterViewInit, OnChanges {
 
 		// TODO: implement
 		return null;
+	}
+
+	openReviewDialog() {
+		const data: DialogData = {
+			gameId: this.gameId,
+			review: this.dudeReview,
+		};
+
+		const dialogRef = this.dialog.open(GameReviewEditComponent, {data});
+
+		dialogRef.afterClosed()
+			.subscribe((result: DialogResult) => {
+				if (!result) {
+					return;
+				}
+
+				this.dudeReview = result.review || null;
+				this.loadData();
+			});
 	}
 }
