@@ -4,14 +4,15 @@ const os = require('os');
 
 const app = express();
 const PORT = 3000;
-const PATH_PUBLIC = process.env.GAMES_FRONTEND_PATH || 'dist/games-frontend';
+const PATH_PUBLIC = __dirname
+	+ (process.env.GAMES_FRONTEND_PATH || '/../dist/games-frontend');
 
 const client = new Eureka({
 	instance: {
 		app: 'games-frontend',
-		hostName: os.hostname(),
+		hostName: 'host.docker.internal',
 		ipAddr: '0.0.0.0',
-		statusPageUrl: `http://${os.hostname()}:3000`,
+		statusPageUrl: `http://host.docker.internal:3000`,
 		vipAddress: 'games-frontend',
 		port: {
 			$: PORT,
@@ -25,7 +26,7 @@ const client = new Eureka({
 		fetchRegistry: false,
 	},
 	eureka: {
-		host: 'localhost',
+		host: 'host.docker.internal',
 		port: 8761,
 		servicePath: '/eureka/apps/',
 	},
@@ -40,7 +41,8 @@ client.start(error => {
 })
 
 app.use(express.static(PATH_PUBLIC));
-app.get('*', (req, res) => res.sendfile(PATH_PUBLIC + '/index.html'));
+app.get('*', (req, res) =>
+	res.sendFile('index.html', {root: PATH_PUBLIC}));
 
 const server = app.listen(PORT, () => {
 	console.log('games-frontend listening on port ' || PORT);
