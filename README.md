@@ -5,6 +5,7 @@ Demo application created in order to learn how to use and combine the following 
 * Angular JS
 * Liquibase
 * PostgreSQL
+* Docker
 * JWT
 * Redis
 * Eureka
