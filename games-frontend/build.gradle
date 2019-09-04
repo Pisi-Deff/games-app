@@ -15,3 +15,6 @@ task npm_run_build {
 }
 
 npm_run_build.dependsOn npmInstall
+
+task build {} // so that all modules have a convenient build task
+build.dependsOn npm_run_build

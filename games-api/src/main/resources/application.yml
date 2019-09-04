@@ -1,16 +1,11 @@
 server:
   port: 8085
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
 spring:
   application:
     name: games-service
   datasource:
-    url: jdbc:postgresql://localhost/games
+    url: jdbc:postgresql://host.docker.internal/games
     username: gameuser
     password: gamepass
     driver-class-name: org.postgresql.Driver
@@ -23,3 +18,8 @@ spring:
         format_sql: true
   redis:
     password: gamesredis
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://host.docker.internal:8761/eureka/

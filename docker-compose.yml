@@ -1,0 +1,29 @@
+version: "3"
+services:
+  eureka:
+    build: eureka
+    ports:
+      - "8761:8761"
+  db:
+    build: db
+    ports:
+      - "5432:5432"
+  zuul:
+    build: zuul
+    depends_on:
+      - eureka
+    ports:
+      - "8080:8080"
+  games-api:
+    build: games-api
+    depends_on:
+      - eureka
+      - db
+    ports:
+      - "8085:8085"
+  games-frontend:
+    build: games-frontend
+    depends_on:
+      - eureka
+    ports:
+      - "3000:3000"

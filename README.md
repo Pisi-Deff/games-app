@@ -12,6 +12,7 @@ Demo application created in order to learn how to use and combine the following 
 * Eureka
 * Zuul
 * Lombok
+* Gradle
 
 # How to run
 TODO

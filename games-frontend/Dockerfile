@@ -11,4 +11,4 @@ COPY server/. .
 COPY dist/games-frontend ./games-frontend
 
 EXPOSE 3000/tcp
-CMD ["node", "server.js"]
+ENTRYPOINT ["node", "server.js"]

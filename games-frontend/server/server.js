@@ -10,9 +10,9 @@ const PATH_PUBLIC = __dirname
 const client = new Eureka({
 	instance: {
 		app: 'games-frontend',
-		hostName: 'host.docker.internal',
+		hostName: os.hostname(),
 		ipAddr: '0.0.0.0',
-		statusPageUrl: `http://host.docker.internal:3000`,
+		statusPageUrl: `http://${os.hostname()}:3000`,
 		vipAddress: 'games-frontend',
 		port: {
 			$: PORT,
@@ -29,6 +29,7 @@ const client = new Eureka({
 		host: 'host.docker.internal',
 		port: 8761,
 		servicePath: '/eureka/apps/',
+		maxRetries: 20,
 	},
 });
 
