@@ -1,4 +1,5 @@
 /.gradle
+/*/build/
 
 # IDEs and editors
 .project
