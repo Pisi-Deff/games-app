@@ -1,5 +1,9 @@
 :host {
 	margin-right: 20px;
+
+	mat-chip.clickable {
+		cursor: pointer;
+	}
 }
 
 .mat-badge .mat-badge-content {

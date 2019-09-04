@@ -1,6 +1,7 @@
 <mat-chip-list aria-label="Tags">
 	<app-game-tag *ngFor="let tag of tags" [tag]="tag"
 		[selected]="isSelectedTag(tag)"
+		clickable="true"
 		(click)="toggleTagging(tag)"
 	></app-game-tag>
 	<button *ngIf="hasMore" mat-button type="button"

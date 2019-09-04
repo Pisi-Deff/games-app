@@ -5,6 +5,7 @@
 	<mat-chip disableRipple="true" color="primary"
 		[selected]="selected" [disabled]="disabled"
 		(click)="handleClick($event)"
+		[ngClass]="{'clickable': clickable}"
 	>
 		{{tag.tagName}}
 	</mat-chip>

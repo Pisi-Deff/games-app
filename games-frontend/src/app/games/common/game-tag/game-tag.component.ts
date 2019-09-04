@@ -19,6 +19,9 @@ export class GameTagComponent {
 	@Input()
 	disabled = false;
 
+	@Input()
+	clickable = false;
+
 	@Output()
 	click = new EventEmitter<MouseEvent>();
 
@@ -38,6 +41,8 @@ export class GameTagComponent {
 	}
 
 	handleClick(event: MouseEvent) {
-		this.click.emit(event);
+		if (this.clickable) {
+			this.click.emit(event);
+		}
 	}
 }
