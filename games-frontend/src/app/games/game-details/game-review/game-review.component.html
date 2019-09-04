@@ -11,9 +11,9 @@
 		</mat-card-title-group>
 	</mat-card-header>
 
-	<mat-divider inset *ngIf="review.review"></mat-divider>
+	<mat-divider inset *ngIf="review.review && review.review.trim()"></mat-divider>
 
-	<mat-card-content *ngIf="review.review">
+	<mat-card-content *ngIf="review.review && review.review.trim()">
 		<div class="review-text">{{review.review}}</div>
 	</mat-card-content>
 </mat-card>
