@@ -8,6 +8,7 @@ Demo application created in order to learn how to use and combine the following 
 * Docker
 * JWT
 * Redis
+* Express.js
 * Eureka
 * Zuul
 * Lombok

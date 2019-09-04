@@ -13,4 +13,7 @@ zuul:
     games-api:
       path: /api/**
       serviceId: games-service
+    games-frontend:
+      path: /**
+      serviceId: games-frontend
 
