@@ -12,7 +12,7 @@
 			<mat-card-title>{{game.name}}</mat-card-title>
 			<mat-card-subtitle class="vcenter">
 				<app-stars-rating [score]="game.avgReviewScore"></app-stars-rating>
-				<span> ({{game.reviews.totalElements}} reviews)</span>
+				<span> ({{game.reviews.totalElements}} review{{game.reviews.totalElements === 1 ? '' : 's'}})</span>
 			</mat-card-subtitle>
 		</mat-card-header>
 
